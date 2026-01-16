@@ -1,0 +1,71 @@
+version: "1.0"
+
+# Route definitions for API Gateway
+routes:
+  # Authentication (no auth required)
+  - path: /api/v1/auth/register
+    method: POST
+    target: identity-service:8080
+    stripPrefix: /api/v1
+    auth: false
+    rateLimit:
+      points: 5
+      duration: 60
+
+  - path: /api/v1/auth/login
+    method: POST
+    target: identity-service:8080
+    stripPrefix: /api/v1
+    auth: false
+    rateLimit:
+      points: 10
+      duration: 60
+
+  - path: /api/v1/auth/refresh
+    method: POST
+    target: identity-service:8080
+    stripPrefix: /api/v1
+    auth: false
+
+  # User Management (requires auth)
+  - path: /api/v1/users/*
+    method: [GET, PUT, PATCH, DELETE]
+    target: user-service:8081
+    stripPrefix: /api/v1
+    auth: true
+    rateLimit:
+      points: 100
+      duration: 60
+
+  # Gym Management
+  - path: /api/v1/gyms/*
+    method: [GET, POST, PUT, DELETE]
+    target: gym-service:8082
+    stripPrefix: /api/v1
+    auth: true
+
+  # Chat (WebSocket)
+  - path: /api/v1/chat/*
+    target: chat-service:8083
+    stripPrefix: /api/v1
+    protocol: websocket
+    auth: true
+
+  # Media Uploads
+  - path: /api/v1/media/upload
+    method: POST
+    target: media-service:8084
+    stripPrefix: /api/v1
+    auth: true
+    maxBodySize: 50MB
+    timeout: 30000
+
+  # Public endpoints (cached)
+  - path: /api/v1/gyms/search
+    method: GET
+    target: gym-service:8082
+    stripPrefix: /api/v1
+    auth: false
+    cache:
+      enabled: true
+      ttl: 300

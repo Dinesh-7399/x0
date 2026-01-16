@@ -1,0 +1,949 @@
+{
+  "lockfileVersion": 1,
+  "workspaces": {
+    "": {
+      "name": "gymato",
+      "devDependencies": {
+        "@biomejs/biome": "^1.5.3",
+        "@types/node": "^20.11.5",
+        "husky": "^8.0.3",
+        "lint-staged": "^15.2.0",
+        "turbo": "^1.11.3",
+        "typescript": "^5.3.3",
+      },
+    },
+    "engines/billing-engine": {
+      "name": "@gymato/billing-engine",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/errors": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "engines/cancellation-engine": {
+      "name": "@gymato/cancellation-engine",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/errors": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "engines/capacity-engine": {
+      "name": "@gymato/capacity-engine",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/errors": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "engines/churn-prediction-engine": {
+      "name": "@gymato/churn-prediction-engine",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/errors": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "engines/commission-engine": {
+      "name": "@gymato/commission-engine",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/errors": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "engines/discount-engine": {
+      "name": "@gymato/discount-engine",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/errors": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "engines/fraud-detection-engine": {
+      "name": "@gymato/fraud-detection-engine",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/errors": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "engines/gamification-engine": {
+      "name": "@gymato/gamification-engine",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/errors": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "engines/geofencing-engine": {
+      "name": "@gymato/geofencing-engine",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/errors": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "engines/inventory-engine": {
+      "name": "@gymato/inventory-engine",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/errors": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "engines/matching-engine": {
+      "name": "@gymato/matching-engine",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/errors": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "engines/notification-intelligence-engine": {
+      "name": "@gymato/notification-intelligence-engine",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/errors": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "engines/nutrition-engine": {
+      "name": "@gymato/nutrition-engine",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/errors": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "engines/pricing-engine": {
+      "name": "@gymato/pricing-engine",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/errors": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "engines/workout-generator-engine": {
+      "name": "@gymato/workout-generator-engine",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/errors": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "packages/database": {
+      "name": "@gymato/database",
+      "version": "0.1.0",
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "packages/errors": {
+      "name": "@gymato/errors",
+      "version": "0.1.0",
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "packages/messaging": {
+      "name": "@gymato/messaging",
+      "version": "0.1.0",
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "packages/observability": {
+      "name": "@gymato/observability",
+      "version": "0.1.0",
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "packages/testing": {
+      "name": "@gymato/testing",
+      "version": "0.1.0",
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "packages/types": {
+      "name": "@gymato/types",
+      "version": "0.1.0",
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "packages/utils": {
+      "name": "@gymato/utils",
+      "version": "0.1.0",
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "packages/validation": {
+      "name": "@gymato/validation",
+      "version": "0.1.0",
+      "dependencies": {
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "services/analytics-service": {
+      "name": "analytics-service",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/database": "workspace:*",
+        "@gymato/errors": "workspace:*",
+        "@gymato/messaging": "workspace:*",
+        "@gymato/observability": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "@gymato/utils": "workspace:*",
+        "@gymato/validation": "workspace:*",
+        "hono": "^3.12.8",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "services/api-gateway": {
+      "name": "api-gateway",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/errors": "workspace:*",
+        "@gymato/observability": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "@gymato/utils": "workspace:*",
+        "hono": "^3.12.8",
+        "ioredis": "^5.3.2",
+        "jsonwebtoken": "^9.0.2",
+        "yaml": "^2.3.4",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "@types/jsonwebtoken": "^9.0.5",
+        "bun-types": "^1.0.25",
+      },
+    },
+    "services/attendance-service": {
+      "name": "attendance-service",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/database": "workspace:*",
+        "@gymato/errors": "workspace:*",
+        "@gymato/messaging": "workspace:*",
+        "@gymato/observability": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "@gymato/utils": "workspace:*",
+        "@gymato/validation": "workspace:*",
+        "hono": "^3.12.8",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "services/chat-service": {
+      "name": "chat-service",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/database": "workspace:*",
+        "@gymato/errors": "workspace:*",
+        "@gymato/messaging": "workspace:*",
+        "@gymato/observability": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "@gymato/utils": "workspace:*",
+        "@gymato/validation": "workspace:*",
+        "hono": "^3.12.8",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "services/feed-service": {
+      "name": "feed-service",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/database": "workspace:*",
+        "@gymato/errors": "workspace:*",
+        "@gymato/messaging": "workspace:*",
+        "@gymato/observability": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "@gymato/utils": "workspace:*",
+        "@gymato/validation": "workspace:*",
+        "hono": "^3.12.8",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "services/gym-service": {
+      "name": "gym-service",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/database": "workspace:*",
+        "@gymato/errors": "workspace:*",
+        "@gymato/messaging": "workspace:*",
+        "@gymato/observability": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "@gymato/utils": "workspace:*",
+        "@gymato/validation": "workspace:*",
+        "hono": "^3.12.8",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "services/identity-service": {
+      "name": "identity-service",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/database": "workspace:*",
+        "@gymato/errors": "workspace:*",
+        "@gymato/messaging": "workspace:*",
+        "@gymato/observability": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "@gymato/utils": "workspace:*",
+        "@gymato/validation": "workspace:*",
+        "hono": "^3.12.8",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "services/instant-session-service": {
+      "name": "instant-session-service",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/database": "workspace:*",
+        "@gymato/errors": "workspace:*",
+        "@gymato/messaging": "workspace:*",
+        "@gymato/observability": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "@gymato/utils": "workspace:*",
+        "@gymato/validation": "workspace:*",
+        "hono": "^3.12.8",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "services/marketplace-service": {
+      "name": "marketplace-service",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/database": "workspace:*",
+        "@gymato/errors": "workspace:*",
+        "@gymato/messaging": "workspace:*",
+        "@gymato/observability": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "@gymato/utils": "workspace:*",
+        "@gymato/validation": "workspace:*",
+        "hono": "^3.12.8",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "services/media-service": {
+      "name": "media-service",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/database": "workspace:*",
+        "@gymato/errors": "workspace:*",
+        "@gymato/messaging": "workspace:*",
+        "@gymato/observability": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "@gymato/utils": "workspace:*",
+        "@gymato/validation": "workspace:*",
+        "hono": "^3.12.8",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "services/membership-service": {
+      "name": "membership-service",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/database": "workspace:*",
+        "@gymato/errors": "workspace:*",
+        "@gymato/messaging": "workspace:*",
+        "@gymato/observability": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "@gymato/utils": "workspace:*",
+        "@gymato/validation": "workspace:*",
+        "hono": "^3.12.8",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "services/message-store-service": {
+      "name": "message-store-service",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/database": "workspace:*",
+        "@gymato/errors": "workspace:*",
+        "@gymato/messaging": "workspace:*",
+        "@gymato/observability": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "@gymato/utils": "workspace:*",
+        "@gymato/validation": "workspace:*",
+        "hono": "^3.12.8",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "services/notification-service": {
+      "name": "notification-service",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/database": "workspace:*",
+        "@gymato/errors": "workspace:*",
+        "@gymato/messaging": "workspace:*",
+        "@gymato/observability": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "@gymato/utils": "workspace:*",
+        "@gymato/validation": "workspace:*",
+        "hono": "^3.12.8",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "services/nutrition-service": {
+      "name": "nutrition-service",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/database": "workspace:*",
+        "@gymato/errors": "workspace:*",
+        "@gymato/messaging": "workspace:*",
+        "@gymato/observability": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "@gymato/utils": "workspace:*",
+        "@gymato/validation": "workspace:*",
+        "hono": "^3.12.8",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "services/order-service": {
+      "name": "order-service",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/database": "workspace:*",
+        "@gymato/errors": "workspace:*",
+        "@gymato/messaging": "workspace:*",
+        "@gymato/observability": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "@gymato/utils": "workspace:*",
+        "@gymato/validation": "workspace:*",
+        "hono": "^3.12.8",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "services/payment-service": {
+      "name": "payment-service",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/database": "workspace:*",
+        "@gymato/errors": "workspace:*",
+        "@gymato/messaging": "workspace:*",
+        "@gymato/observability": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "@gymato/utils": "workspace:*",
+        "@gymato/validation": "workspace:*",
+        "hono": "^3.12.8",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "services/post-service": {
+      "name": "post-service",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/database": "workspace:*",
+        "@gymato/errors": "workspace:*",
+        "@gymato/messaging": "workspace:*",
+        "@gymato/observability": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "@gymato/utils": "workspace:*",
+        "@gymato/validation": "workspace:*",
+        "hono": "^3.12.8",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "services/scanner-service": {
+      "name": "scanner-service",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/database": "workspace:*",
+        "@gymato/errors": "workspace:*",
+        "@gymato/messaging": "workspace:*",
+        "@gymato/observability": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "@gymato/utils": "workspace:*",
+        "@gymato/validation": "workspace:*",
+        "hono": "^3.12.8",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "services/social-service": {
+      "name": "social-service",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/database": "workspace:*",
+        "@gymato/errors": "workspace:*",
+        "@gymato/messaging": "workspace:*",
+        "@gymato/observability": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "@gymato/utils": "workspace:*",
+        "@gymato/validation": "workspace:*",
+        "hono": "^3.12.8",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "services/trainer-service": {
+      "name": "trainer-service",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/database": "workspace:*",
+        "@gymato/errors": "workspace:*",
+        "@gymato/messaging": "workspace:*",
+        "@gymato/observability": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "@gymato/utils": "workspace:*",
+        "@gymato/validation": "workspace:*",
+        "hono": "^3.12.8",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "services/user-service": {
+      "name": "user-service",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/database": "workspace:*",
+        "@gymato/errors": "workspace:*",
+        "@gymato/messaging": "workspace:*",
+        "@gymato/observability": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "@gymato/utils": "workspace:*",
+        "@gymato/validation": "workspace:*",
+        "hono": "^3.12.8",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+    "services/workout-service": {
+      "name": "workout-service",
+      "version": "0.1.0",
+      "dependencies": {
+        "@gymato/database": "workspace:*",
+        "@gymato/errors": "workspace:*",
+        "@gymato/messaging": "workspace:*",
+        "@gymato/observability": "workspace:*",
+        "@gymato/types": "workspace:*",
+        "@gymato/utils": "workspace:*",
+        "@gymato/validation": "workspace:*",
+        "hono": "^3.12.8",
+        "zod": "^3.22.4",
+      },
+      "devDependencies": {
+        "bun-types": "^1.0.25",
+      },
+    },
+  },
+  "packages": {
+    "@biomejs/biome": ["@biomejs/biome@1.9.4", "", { "optionalDependencies": { "@biomejs/cli-darwin-arm64": "1.9.4", "@biomejs/cli-darwin-x64": "1.9.4", "@biomejs/cli-linux-arm64": "1.9.4", "@biomejs/cli-linux-arm64-musl": "1.9.4", "@biomejs/cli-linux-x64": "1.9.4", "@biomejs/cli-linux-x64-musl": "1.9.4", "@biomejs/cli-win32-arm64": "1.9.4", "@biomejs/cli-win32-x64": "1.9.4" }, "bin": { "biome": "bin/biome" } }, "sha512-1rkd7G70+o9KkTn5KLmDYXihGoTaIGO9PIIN2ZB7UJxFrWw04CZHPYiMRjYsaDvVV7hP1dYNRLxSANLaBFGpog=="],
+
+    "@biomejs/cli-darwin-arm64": ["@biomejs/cli-darwin-arm64@1.9.4", "", { "os": "darwin", "cpu": "arm64" }, "sha512-bFBsPWrNvkdKrNCYeAp+xo2HecOGPAy9WyNyB/jKnnedgzl4W4Hb9ZMzYNbf8dMCGmUdSavlYHiR01QaYR58cw=="],
+
+    "@biomejs/cli-darwin-x64": ["@biomejs/cli-darwin-x64@1.9.4", "", { "os": "darwin", "cpu": "x64" }, "sha512-ngYBh/+bEedqkSevPVhLP4QfVPCpb+4BBe2p7Xs32dBgs7rh9nY2AIYUL6BgLw1JVXV8GlpKmb/hNiuIxfPfZg=="],
+
+    "@biomejs/cli-linux-arm64": ["@biomejs/cli-linux-arm64@1.9.4", "", { "os": "linux", "cpu": "arm64" }, "sha512-fJIW0+LYujdjUgJJuwesP4EjIBl/N/TcOX3IvIHJQNsAqvV2CHIogsmA94BPG6jZATS4Hi+xv4SkBBQSt1N4/g=="],
+
+    "@biomejs/cli-linux-arm64-musl": ["@biomejs/cli-linux-arm64-musl@1.9.4", "", { "os": "linux", "cpu": "arm64" }, "sha512-v665Ct9WCRjGa8+kTr0CzApU0+XXtRgwmzIf1SeKSGAv+2scAlW6JR5PMFo6FzqqZ64Po79cKODKf3/AAmECqA=="],
+
+    "@biomejs/cli-linux-x64": ["@biomejs/cli-linux-x64@1.9.4", "", { "os": "linux", "cpu": "x64" }, "sha512-lRCJv/Vi3Vlwmbd6K+oQ0KhLHMAysN8lXoCI7XeHlxaajk06u7G+UsFSO01NAs5iYuWKmVZjmiOzJ0OJmGsMwg=="],
+
+    "@biomejs/cli-linux-x64-musl": ["@biomejs/cli-linux-x64-musl@1.9.4", "", { "os": "linux", "cpu": "x64" }, "sha512-gEhi/jSBhZ2m6wjV530Yy8+fNqG8PAinM3oV7CyO+6c3CEh16Eizm21uHVsyVBEB6RIM8JHIl6AGYCv6Q6Q9Tg=="],
+
+    "@biomejs/cli-win32-arm64": ["@biomejs/cli-win32-arm64@1.9.4", "", { "os": "win32", "cpu": "arm64" }, "sha512-tlbhLk+WXZmgwoIKwHIHEBZUwxml7bRJgk0X2sPyNR3S93cdRq6XulAZRQJ17FYGGzWne0fgrXBKpl7l4M87Hg=="],
+
+    "@biomejs/cli-win32-x64": ["@biomejs/cli-win32-x64@1.9.4", "", { "os": "win32", "cpu": "x64" }, "sha512-8Y5wMhVIPaWe6jw2H+KlEm4wP/f7EW3810ZLmDlrEEy5KvBsb9ECEfu/kMWD484ijfQ8+nIi0giMgu9g1UAuuA=="],
+
+    "@gymato/billing-engine": ["@gymato/billing-engine@workspace:engines/billing-engine"],
+
+    "@gymato/cancellation-engine": ["@gymato/cancellation-engine@workspace:engines/cancellation-engine"],
+
+    "@gymato/capacity-engine": ["@gymato/capacity-engine@workspace:engines/capacity-engine"],
+
+    "@gymato/churn-prediction-engine": ["@gymato/churn-prediction-engine@workspace:engines/churn-prediction-engine"],
+
+    "@gymato/commission-engine": ["@gymato/commission-engine@workspace:engines/commission-engine"],
+
+    "@gymato/database": ["@gymato/database@workspace:packages/database"],
+
+    "@gymato/discount-engine": ["@gymato/discount-engine@workspace:engines/discount-engine"],
+
+    "@gymato/errors": ["@gymato/errors@workspace:packages/errors"],
+
+    "@gymato/fraud-detection-engine": ["@gymato/fraud-detection-engine@workspace:engines/fraud-detection-engine"],
+
+    "@gymato/gamification-engine": ["@gymato/gamification-engine@workspace:engines/gamification-engine"],
+
+    "@gymato/geofencing-engine": ["@gymato/geofencing-engine@workspace:engines/geofencing-engine"],
+
+    "@gymato/inventory-engine": ["@gymato/inventory-engine@workspace:engines/inventory-engine"],
+
+    "@gymato/matching-engine": ["@gymato/matching-engine@workspace:engines/matching-engine"],
+
+    "@gymato/messaging": ["@gymato/messaging@workspace:packages/messaging"],
+
+    "@gymato/notification-intelligence-engine": ["@gymato/notification-intelligence-engine@workspace:engines/notification-intelligence-engine"],
+
+    "@gymato/nutrition-engine": ["@gymato/nutrition-engine@workspace:engines/nutrition-engine"],
+
+    "@gymato/observability": ["@gymato/observability@workspace:packages/observability"],
+
+    "@gymato/pricing-engine": ["@gymato/pricing-engine@workspace:engines/pricing-engine"],
+
+    "@gymato/testing": ["@gymato/testing@workspace:packages/testing"],
+
+    "@gymato/types": ["@gymato/types@workspace:packages/types"],
+
+    "@gymato/utils": ["@gymato/utils@workspace:packages/utils"],
+
+    "@gymato/validation": ["@gymato/validation@workspace:packages/validation"],
+
+    "@gymato/workout-generator-engine": ["@gymato/workout-generator-engine@workspace:engines/workout-generator-engine"],
+
+    "@ioredis/commands": ["@ioredis/commands@1.5.0", "", {}, "sha512-eUgLqrMf8nJkZxT24JvVRrQya1vZkQh8BBeYNwGDqa5I0VUi8ACx7uFvAaLxintokpTenkK6DASvo/bvNbBGow=="],
+
+    "@types/jsonwebtoken": ["@types/jsonwebtoken@9.0.10", "", { "dependencies": { "@types/ms": "*", "@types/node": "*" } }, "sha512-asx5hIG9Qmf/1oStypjanR7iKTv0gXQ1Ov/jfrX6kS/EO0OFni8orbmGCn0672NHR3kXHwpAwR+B368ZGN/2rA=="],
+
+    "@types/ms": ["@types/ms@2.1.0", "", {}, "sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA=="],
+
+    "@types/node": ["@types/node@20.19.30", "", { "dependencies": { "undici-types": "~6.21.0" } }, "sha512-WJtwWJu7UdlvzEAUm484QNg5eAoq5QR08KDNx7g45Usrs2NtOPiX8ugDqmKdXkyL03rBqU5dYNYVQetEpBHq2g=="],
+
+    "analytics-service": ["analytics-service@workspace:services/analytics-service"],
+
+    "ansi-escapes": ["ansi-escapes@7.2.0", "", { "dependencies": { "environment": "^1.0.0" } }, "sha512-g6LhBsl+GBPRWGWsBtutpzBYuIIdBkLEvad5C/va/74Db018+5TZiyA26cZJAr3Rft5lprVqOIPxf5Vid6tqAw=="],
+
+    "ansi-regex": ["ansi-regex@6.2.2", "", {}, "sha512-Bq3SmSpyFHaWjPk8If9yc6svM8c56dB5BAtW4Qbw5jHTwwXXcTLoRMkpDJp6VL0XzlWaCHTXrkFURMYmD0sLqg=="],
+
+    "ansi-styles": ["ansi-styles@6.2.3", "", {}, "sha512-4Dj6M28JB+oAH8kFkTLUo+a2jwOFkuqb3yucU0CANcRRUbxS0cP0nZYCGjcc3BNXwRIsUVmDGgzawme7zvJHvg=="],
+
+    "api-gateway": ["api-gateway@workspace:services/api-gateway"],
+
+    "attendance-service": ["attendance-service@workspace:services/attendance-service"],
+
+    "braces": ["braces@3.0.3", "", { "dependencies": { "fill-range": "^7.1.1" } }, "sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA=="],
+
+    "buffer-equal-constant-time": ["buffer-equal-constant-time@1.0.1", "", {}, "sha512-zRpUiDwd/xk6ADqPMATG8vc9VPrkck7T07OIx0gnjmJAnHnTVXNQG3vfvWNuiZIkwu9KrKdA1iJKfsfTVxE6NA=="],
+
+    "bun-types": ["bun-types@1.3.6", "", { "dependencies": { "@types/node": "*" } }, "sha512-OlFwHcnNV99r//9v5IIOgQ9Uk37gZqrNMCcqEaExdkVq3Avwqok1bJFmvGMCkCE0FqzdY8VMOZpfpR3lwI+CsQ=="],
+
+    "chalk": ["chalk@5.6.2", "", {}, "sha512-7NzBL0rN6fMUW+f7A6Io4h40qQlG+xGmtMxfbnH/K7TAtt8JQWVQK+6g0UXKMeVJoyV5EkkNsErQ8pVD3bLHbA=="],
+
+    "chat-service": ["chat-service@workspace:services/chat-service"],
+
+    "cli-cursor": ["cli-cursor@5.0.0", "", { "dependencies": { "restore-cursor": "^5.0.0" } }, "sha512-aCj4O5wKyszjMmDT4tZj93kxyydN/K5zPWSCe6/0AV/AA1pqe5ZBIw0a2ZfPQV7lL5/yb5HsUreJ6UFAF1tEQw=="],
+
+    "cli-truncate": ["cli-truncate@4.0.0", "", { "dependencies": { "slice-ansi": "^5.0.0", "string-width": "^7.0.0" } }, "sha512-nPdaFdQ0h/GEigbPClz11D0v/ZJEwxmeVZGeMo3Z5StPtUTkA9o1lD6QwoirYiSDzbcwn2XcjwmCp68W1IS4TA=="],
+
+    "cluster-key-slot": ["cluster-key-slot@1.1.2", "", {}, "sha512-RMr0FhtfXemyinomL4hrWcYJxmX6deFdCxpJzhDttxgO1+bcCnkk+9drydLVDmAMG7NE6aN/fl4F7ucU/90gAA=="],
+
+    "colorette": ["colorette@2.0.20", "", {}, "sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w=="],
+
+    "commander": ["commander@13.1.0", "", {}, "sha512-/rFeCpNJQbhSZjGVwO9RFV3xPqbnERS8MmIQzCtD/zl6gpJuV/bMLuN92oG3F7d8oDEHHRrujSXNUr8fpjntKw=="],
+
+    "cross-spawn": ["cross-spawn@7.0.6", "", { "dependencies": { "path-key": "^3.1.0", "shebang-command": "^2.0.0", "which": "^2.0.1" } }, "sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA=="],
+
+    "debug": ["debug@4.4.3", "", { "dependencies": { "ms": "^2.1.3" } }, "sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA=="],
+
+    "denque": ["denque@2.1.0", "", {}, "sha512-HVQE3AAb/pxF8fQAoiqpvg9i3evqug3hoiwakOyZAwJm+6vZehbkYXZ0l4JxS+I3QxM97v5aaRNhj8v5oBhekw=="],
+
+    "ecdsa-sig-formatter": ["ecdsa-sig-formatter@1.0.11", "", { "dependencies": { "safe-buffer": "^5.0.1" } }, "sha512-nagl3RYrbNv6kQkeJIpt6NJZy8twLB/2vtz6yN9Z4vRKHN4/QZJIEbqohALSgwKdnksuY3k5Addp5lg8sVoVcQ=="],
+
+    "emoji-regex": ["emoji-regex@10.6.0", "", {}, "sha512-toUI84YS5YmxW219erniWD0CIVOo46xGKColeNQRgOzDorgBi1v4D71/OFzgD9GO2UGKIv1C3Sp8DAn0+j5w7A=="],
+
+    "environment": ["environment@1.1.0", "", {}, "sha512-xUtoPkMggbz0MPyPiIWr1Kp4aeWJjDZ6SMvURhimjdZgsRuDplF5/s9hcgGhyXMhs+6vpnuoiZ2kFiu3FMnS8Q=="],
+
+    "eventemitter3": ["eventemitter3@5.0.1", "", {}, "sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA=="],
+
+    "execa": ["execa@8.0.1", "", { "dependencies": { "cross-spawn": "^7.0.3", "get-stream": "^8.0.1", "human-signals": "^5.0.0", "is-stream": "^3.0.0", "merge-stream": "^2.0.0", "npm-run-path": "^5.1.0", "onetime": "^6.0.0", "signal-exit": "^4.1.0", "strip-final-newline": "^3.0.0" } }, "sha512-VyhnebXciFV2DESc+p6B+y0LjSm0krU4OgJN44qFAhBY0TJ+1V61tYD2+wHusZ6F9n5K+vl8k0sTy7PEfV4qpg=="],
+
+    "feed-service": ["feed-service@workspace:services/feed-service"],
+
+    "fill-range": ["fill-range@7.1.1", "", { "dependencies": { "to-regex-range": "^5.0.1" } }, "sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg=="],
+
+    "get-east-asian-width": ["get-east-asian-width@1.4.0", "", {}, "sha512-QZjmEOC+IT1uk6Rx0sX22V6uHWVwbdbxf1faPqJ1QhLdGgsRGCZoyaQBm/piRdJy/D2um6hM1UP7ZEeQ4EkP+Q=="],
+
+    "get-stream": ["get-stream@8.0.1", "", {}, "sha512-VaUJspBffn/LMCJVoMvSAdmscJyS1auj5Zulnn5UoYcY531UWmdwhRWkcGKnGU93m5HSXP9LP2usOryrBtQowA=="],
+
+    "gym-service": ["gym-service@workspace:services/gym-service"],
+
+    "hono": ["hono@3.12.12", "", {}, "sha512-5IAMJOXfpA5nT+K0MNjClchzz0IhBHs2Szl7WFAhrFOsbtQsYmNynFyJRg/a3IPsmCfxcrf8txUGiNShXpK5Rg=="],
+
+    "human-signals": ["human-signals@5.0.0", "", {}, "sha512-AXcZb6vzzrFAUE61HnN4mpLqd/cSIwNQjtNWR0euPm6y0iqx3G4gOXaIDdtdDwZmhwe82LA6+zinmW4UBWVePQ=="],
+
+    "husky": ["husky@8.0.3", "", { "bin": { "husky": "lib/bin.js" } }, "sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg=="],
+
+    "identity-service": ["identity-service@workspace:services/identity-service"],
+
+    "instant-session-service": ["instant-session-service@workspace:services/instant-session-service"],
+
+    "ioredis": ["ioredis@5.9.2", "", { "dependencies": { "@ioredis/commands": "1.5.0", "cluster-key-slot": "^1.1.0", "debug": "^4.3.4", "denque": "^2.1.0", "lodash.defaults": "^4.2.0", "lodash.isarguments": "^3.1.0", "redis-errors": "^1.2.0", "redis-parser": "^3.0.0", "standard-as-callback": "^2.1.0" } }, "sha512-tAAg/72/VxOUW7RQSX1pIxJVucYKcjFjfvj60L57jrZpYCHC3XN0WCQ3sNYL4Gmvv+7GPvTAjc+KSdeNuE8oWQ=="],
+
+    "is-fullwidth-code-point": ["is-fullwidth-code-point@4.0.0", "", {}, "sha512-O4L094N2/dZ7xqVdrXhh9r1KODPJpFms8B5sGdJLPy664AgvXsreZUyCQQNItZRDlYug4xStLjNp/sz3HvBowQ=="],
+
+    "is-number": ["is-number@7.0.0", "", {}, "sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng=="],
+
+    "is-stream": ["is-stream@3.0.0", "", {}, "sha512-LnQR4bZ9IADDRSkvpqMGvt/tEJWclzklNgSw48V5EAaAeDd6qGvN8ei6k5p0tvxSR171VmGyHuTiAOfxAbr8kA=="],
+
+    "isexe": ["isexe@2.0.0", "", {}, "sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw=="],
+
+    "jsonwebtoken": ["jsonwebtoken@9.0.3", "", { "dependencies": { "jws": "^4.0.1", "lodash.includes": "^4.3.0", "lodash.isboolean": "^3.0.3", "lodash.isinteger": "^4.0.4", "lodash.isnumber": "^3.0.3", "lodash.isplainobject": "^4.0.6", "lodash.isstring": "^4.0.1", "lodash.once": "^4.0.0", "ms": "^2.1.1", "semver": "^7.5.4" } }, "sha512-MT/xP0CrubFRNLNKvxJ2BYfy53Zkm++5bX9dtuPbqAeQpTVe0MQTFhao8+Cp//EmJp244xt6Drw/GVEGCUj40g=="],
+
+    "jwa": ["jwa@2.0.1", "", { "dependencies": { "buffer-equal-constant-time": "^1.0.1", "ecdsa-sig-formatter": "1.0.11", "safe-buffer": "^5.0.1" } }, "sha512-hRF04fqJIP8Abbkq5NKGN0Bbr3JxlQ+qhZufXVr0DvujKy93ZCbXZMHDL4EOtodSbCWxOqR8MS1tXA5hwqCXDg=="],
+
+    "jws": ["jws@4.0.1", "", { "dependencies": { "jwa": "^2.0.1", "safe-buffer": "^5.0.1" } }, "sha512-EKI/M/yqPncGUUh44xz0PxSidXFr/+r0pA70+gIYhjv+et7yxM+s29Y+VGDkovRofQem0fs7Uvf4+YmAdyRduA=="],
+
+    "lilconfig": ["lilconfig@3.1.3", "", {}, "sha512-/vlFKAoH5Cgt3Ie+JLhRbwOsCQePABiU3tJ1egGvyQ+33R/vcwM2Zl2QR/LzjsBeItPt3oSVXapn+m4nQDvpzw=="],
+
+    "lint-staged": ["lint-staged@15.5.2", "", { "dependencies": { "chalk": "^5.4.1", "commander": "^13.1.0", "debug": "^4.4.0", "execa": "^8.0.1", "lilconfig": "^3.1.3", "listr2": "^8.2.5", "micromatch": "^4.0.8", "pidtree": "^0.6.0", "string-argv": "^0.3.2", "yaml": "^2.7.0" }, "bin": { "lint-staged": "bin/lint-staged.js" } }, "sha512-YUSOLq9VeRNAo/CTaVmhGDKG+LBtA8KF1X4K5+ykMSwWST1vDxJRB2kv2COgLb1fvpCo+A/y9A0G0znNVmdx4w=="],
+
+    "listr2": ["listr2@8.3.3", "", { "dependencies": { "cli-truncate": "^4.0.0", "colorette": "^2.0.20", "eventemitter3": "^5.0.1", "log-update": "^6.1.0", "rfdc": "^1.4.1", "wrap-ansi": "^9.0.0" } }, "sha512-LWzX2KsqcB1wqQ4AHgYb4RsDXauQiqhjLk+6hjbaeHG4zpjjVAB6wC/gz6X0l+Du1cN3pUB5ZlrvTbhGSNnUQQ=="],
+
+    "lodash.defaults": ["lodash.defaults@4.2.0", "", {}, "sha512-qjxPLHd3r5DnsdGacqOMU6pb/avJzdh9tFX2ymgoZE27BmjXrNy/y4LoaiTeAb+O3gL8AfpJGtqfX/ae2leYYQ=="],
+
+    "lodash.includes": ["lodash.includes@4.3.0", "", {}, "sha512-W3Bx6mdkRTGtlJISOvVD/lbqjTlPPUDTMnlXZFnVwi9NKJ6tiAk6LVdlhZMm17VZisqhKcgzpO5Wz91PCt5b0w=="],
+
+    "lodash.isarguments": ["lodash.isarguments@3.1.0", "", {}, "sha512-chi4NHZlZqZD18a0imDHnZPrDeBbTtVN7GXMwuGdRH9qotxAjYs3aVLKc7zNOG9eddR5Ksd8rvFEBc9SsggPpg=="],
+
+    "lodash.isboolean": ["lodash.isboolean@3.0.3", "", {}, "sha512-Bz5mupy2SVbPHURB98VAcw+aHh4vRV5IPNhILUCsOzRmsTmSQ17jIuqopAentWoehktxGd9e/hbIXq980/1QJg=="],
+
+    "lodash.isinteger": ["lodash.isinteger@4.0.4", "", {}, "sha512-DBwtEWN2caHQ9/imiNeEA5ys1JoRtRfY3d7V9wkqtbycnAmTvRRmbHKDV4a0EYc678/dia0jrte4tjYwVBaZUA=="],
+
+    "lodash.isnumber": ["lodash.isnumber@3.0.3", "", {}, "sha512-QYqzpfwO3/CWf3XP+Z+tkQsfaLL/EnUlXWVkIk5FUPc4sBdTehEqZONuyRt2P67PXAk+NXmTBcc97zw9t1FQrw=="],
+
+    "lodash.isplainobject": ["lodash.isplainobject@4.0.6", "", {}, "sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA=="],
+
+    "lodash.isstring": ["lodash.isstring@4.0.1", "", {}, "sha512-0wJxfxH1wgO3GrbuP+dTTk7op+6L41QCXbGINEmD+ny/G/eCqGzxyCsh7159S+mgDDcoarnBw6PC1PS5+wUGgw=="],
+
+    "lodash.once": ["lodash.once@4.1.1", "", {}, "sha512-Sb487aTOCr9drQVL8pIxOzVhafOjZN9UU54hiN8PU3uAiSV7lx1yYNpbNmex2PK6dSJoNTSJUUswT651yww3Mg=="],
+
+    "log-update": ["log-update@6.1.0", "", { "dependencies": { "ansi-escapes": "^7.0.0", "cli-cursor": "^5.0.0", "slice-ansi": "^7.1.0", "strip-ansi": "^7.1.0", "wrap-ansi": "^9.0.0" } }, "sha512-9ie8ItPR6tjY5uYJh8K/Zrv/RMZ5VOlOWvtZdEHYSTFKZfIBPQa9tOAEeAWhd+AnIneLJ22w5fjOYtoutpWq5w=="],
+
+    "marketplace-service": ["marketplace-service@workspace:services/marketplace-service"],
+
+    "media-service": ["media-service@workspace:services/media-service"],
+
+    "membership-service": ["membership-service@workspace:services/membership-service"],
+
+    "merge-stream": ["merge-stream@2.0.0", "", {}, "sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w=="],
+
+    "message-store-service": ["message-store-service@workspace:services/message-store-service"],
+
+    "micromatch": ["micromatch@4.0.8", "", { "dependencies": { "braces": "^3.0.3", "picomatch": "^2.3.1" } }, "sha512-PXwfBhYu0hBCPw8Dn0E+WDYb7af3dSLVWKi3HGv84IdF4TyFoC0ysxFd0Goxw7nSv4T/PzEJQxsYsEiFCKo2BA=="],
+
+    "mimic-fn": ["mimic-fn@4.0.0", "", {}, "sha512-vqiC06CuhBTUdZH+RYl8sFrL096vA45Ok5ISO6sE/Mr1jRbGH4Csnhi8f3wKVl7x8mO4Au7Ir9D3Oyv1VYMFJw=="],
+
+    "mimic-function": ["mimic-function@5.0.1", "", {}, "sha512-VP79XUPxV2CigYP3jWwAUFSku2aKqBH7uTAapFWCBqutsbmDo96KY5o8uh6U+/YSIn5OxJnXp73beVkpqMIGhA=="],
+
+    "ms": ["ms@2.1.3", "", {}, "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA=="],
+
+    "notification-service": ["notification-service@workspace:services/notification-service"],
+
+    "npm-run-path": ["npm-run-path@5.3.0", "", { "dependencies": { "path-key": "^4.0.0" } }, "sha512-ppwTtiJZq0O/ai0z7yfudtBpWIoxM8yE6nHi1X47eFR2EWORqfbu6CnPlNsjeN683eT0qG6H/Pyf9fCcvjnnnQ=="],
+
+    "nutrition-service": ["nutrition-service@workspace:services/nutrition-service"],
+
+    "onetime": ["onetime@6.0.0", "", { "dependencies": { "mimic-fn": "^4.0.0" } }, "sha512-1FlR+gjXK7X+AsAHso35MnyN5KqGwJRi/31ft6x0M194ht7S+rWAvd7PHss9xSKMzE0asv1pyIHaJYq+BbacAQ=="],
+
+    "order-service": ["order-service@workspace:services/order-service"],
+
+    "path-key": ["path-key@3.1.1", "", {}, "sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q=="],
+
+    "payment-service": ["payment-service@workspace:services/payment-service"],
+
+    "picomatch": ["picomatch@2.3.1", "", {}, "sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA=="],
+
+    "pidtree": ["pidtree@0.6.0", "", { "bin": { "pidtree": "bin/pidtree.js" } }, "sha512-eG2dWTVw5bzqGRztnHExczNxt5VGsE6OwTeCG3fdUf9KBsZzO3R5OIIIzWR+iZA0NtZ+RDVdaoE2dK1cn6jH4g=="],
+
+    "post-service": ["post-service@workspace:services/post-service"],
+
+    "redis-errors": ["redis-errors@1.2.0", "", {}, "sha512-1qny3OExCf0UvUV/5wpYKf2YwPcOqXzkwKKSmKHiE6ZMQs5heeE/c8eXK+PNllPvmjgAbfnsbpkGZWy8cBpn9w=="],
+
+    "redis-parser": ["redis-parser@3.0.0", "", { "dependencies": { "redis-errors": "^1.0.0" } }, "sha512-DJnGAeenTdpMEH6uAJRK/uiyEIH9WVsUmoLwzudwGJUwZPp80PDBWPHXSAGNPwNvIXAbe7MSUB1zQFugFml66A=="],
+
+    "restore-cursor": ["restore-cursor@5.1.0", "", { "dependencies": { "onetime": "^7.0.0", "signal-exit": "^4.1.0" } }, "sha512-oMA2dcrw6u0YfxJQXm342bFKX/E4sG9rbTzO9ptUcR/e8A33cHuvStiYOwH7fszkZlZ1z/ta9AAoPk2F4qIOHA=="],
+
+    "rfdc": ["rfdc@1.4.1", "", {}, "sha512-q1b3N5QkRUWUl7iyylaaj3kOpIT0N2i9MqIEQXP73GVsN9cw3fdx8X63cEmWhJGi2PPCF23Ijp7ktmd39rawIA=="],
+
+    "safe-buffer": ["safe-buffer@5.2.1", "", {}, "sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ=="],
+
+    "scanner-service": ["scanner-service@workspace:services/scanner-service"],
+
+    "semver": ["semver@7.7.3", "", { "bin": { "semver": "bin/semver.js" } }, "sha512-SdsKMrI9TdgjdweUSR9MweHA4EJ8YxHn8DFaDisvhVlUOe4BF1tLD7GAj0lIqWVl+dPb/rExr0Btby5loQm20Q=="],
+
+    "shebang-command": ["shebang-command@2.0.0", "", { "dependencies": { "shebang-regex": "^3.0.0" } }, "sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA=="],
+
+    "shebang-regex": ["shebang-regex@3.0.0", "", {}, "sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A=="],
+
+    "signal-exit": ["signal-exit@4.1.0", "", {}, "sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw=="],
+
+    "slice-ansi": ["slice-ansi@5.0.0", "", { "dependencies": { "ansi-styles": "^6.0.0", "is-fullwidth-code-point": "^4.0.0" } }, "sha512-FC+lgizVPfie0kkhqUScwRu1O/lF6NOgJmlCgK+/LYxDCTk8sGelYaHDhFcDN+Sn3Cv+3VSa4Byeo+IMCzpMgQ=="],
+
+    "social-service": ["social-service@workspace:services/social-service"],
+
+    "standard-as-callback": ["standard-as-callback@2.1.0", "", {}, "sha512-qoRRSyROncaz1z0mvYqIE4lCd9p2R90i6GxW3uZv5ucSu8tU7B5HXUP1gG8pVZsYNVaXjk8ClXHPttLyxAL48A=="],
+
+    "string-argv": ["string-argv@0.3.2", "", {}, "sha512-aqD2Q0144Z+/RqG52NeHEkZauTAUWJO8c6yTftGJKO3Tja5tUgIfmIl6kExvhtxSDP7fXB6DvzkfMpCd/F3G+Q=="],
+
+    "string-width": ["string-width@7.2.0", "", { "dependencies": { "emoji-regex": "^10.3.0", "get-east-asian-width": "^1.0.0", "strip-ansi": "^7.1.0" } }, "sha512-tsaTIkKW9b4N+AEj+SVA+WhJzV7/zMhcSu78mLKWSk7cXMOSHsBKFWUs0fWwq8QyK3MgJBQRX6Gbi4kYbdvGkQ=="],
+
+    "strip-ansi": ["strip-ansi@7.1.2", "", { "dependencies": { "ansi-regex": "^6.0.1" } }, "sha512-gmBGslpoQJtgnMAvOVqGZpEz9dyoKTCzy2nfz/n8aIFhN/jCE/rCmcxabB6jOOHV+0WNnylOxaxBQPSvcWklhA=="],
+
+    "strip-final-newline": ["strip-final-newline@3.0.0", "", {}, "sha512-dOESqjYr96iWYylGObzd39EuNTa5VJxyvVAEm5Jnh7KGo75V43Hk1odPQkNDyXNmUR6k+gEiDVXnjB8HJ3crXw=="],
+
+    "to-regex-range": ["to-regex-range@5.0.1", "", { "dependencies": { "is-number": "^7.0.0" } }, "sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ=="],
+
+    "trainer-service": ["trainer-service@workspace:services/trainer-service"],
+
+    "turbo": ["turbo@1.13.4", "", { "optionalDependencies": { "turbo-darwin-64": "1.13.4", "turbo-darwin-arm64": "1.13.4", "turbo-linux-64": "1.13.4", "turbo-linux-arm64": "1.13.4", "turbo-windows-64": "1.13.4", "turbo-windows-arm64": "1.13.4" }, "bin": { "turbo": "bin/turbo" } }, "sha512-1q7+9UJABuBAHrcC4Sxp5lOqYS5mvxRrwa33wpIyM18hlOCpRD/fTJNxZ0vhbMcJmz15o9kkVm743mPn7p6jpQ=="],
+
+    "turbo-darwin-64": ["turbo-darwin-64@1.13.4", "", { "os": "darwin", "cpu": "x64" }, "sha512-A0eKd73R7CGnRinTiS7txkMElg+R5rKFp9HV7baDiEL4xTG1FIg/56Vm7A5RVgg8UNgG2qNnrfatJtb+dRmNdw=="],
+
+    "turbo-darwin-arm64": ["turbo-darwin-arm64@1.13.4", "", { "os": "darwin", "cpu": "arm64" }, "sha512-eG769Q0NF6/Vyjsr3mKCnkG/eW6dKMBZk6dxWOdrHfrg6QgfkBUk0WUUujzdtVPiUIvsh4l46vQrNVd9EOtbyA=="],
+
+    "turbo-linux-64": ["turbo-linux-64@1.13.4", "", { "os": "linux", "cpu": "x64" }, "sha512-Bq0JphDeNw3XEi+Xb/e4xoKhs1DHN7OoLVUbTIQz+gazYjigVZvtwCvgrZI7eW9Xo1eOXM2zw2u1DGLLUfmGkQ=="],
+
+    "turbo-linux-arm64": ["turbo-linux-arm64@1.13.4", "", { "os": "linux", "cpu": "arm64" }, "sha512-BJcXw1DDiHO/okYbaNdcWN6szjXyHWx9d460v6fCHY65G8CyqGU3y2uUTPK89o8lq/b2C8NK0yZD+Vp0f9VoIg=="],
+
+    "turbo-windows-64": ["turbo-windows-64@1.13.4", "", { "os": "win32", "cpu": "x64" }, "sha512-OFFhXHOFLN7A78vD/dlVuuSSVEB3s9ZBj18Tm1hk3aW1HTWTuAw0ReN6ZNlVObZUHvGy8d57OAGGxf2bT3etQw=="],
+
+    "turbo-windows-arm64": ["turbo-windows-arm64@1.13.4", "", { "os": "win32", "cpu": "arm64" }, "sha512-u5A+VOKHswJJmJ8o8rcilBfU5U3Y1TTAfP9wX8bFh8teYF1ghP0EhtMRLjhtp6RPa+XCxHHVA2CiC3gbh5eg5g=="],
+
+    "typescript": ["typescript@5.9.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw=="],
+
+    "undici-types": ["undici-types@6.21.0", "", {}, "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ=="],
+
+    "user-service": ["user-service@workspace:services/user-service"],
+
+    "which": ["which@2.0.2", "", { "dependencies": { "isexe": "^2.0.0" }, "bin": { "node-which": "./bin/node-which" } }, "sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA=="],
+
+    "workout-service": ["workout-service@workspace:services/workout-service"],
+
+    "wrap-ansi": ["wrap-ansi@9.0.2", "", { "dependencies": { "ansi-styles": "^6.2.1", "string-width": "^7.0.0", "strip-ansi": "^7.1.0" } }, "sha512-42AtmgqjV+X1VpdOfyTGOYRi0/zsoLqtXQckTmqTeybT+BDIbM/Guxo7x3pE2vtpr1ok6xRqM9OpBe+Jyoqyww=="],
+
+    "yaml": ["yaml@2.8.2", "", { "bin": { "yaml": "bin.mjs" } }, "sha512-mplynKqc1C2hTVYxd0PU2xQAc22TI1vShAYGksCCfxbn/dFwnHTNi1bvYsBTkhdUNtGIf5xNOg938rrSSYvS9A=="],
+
+    "zod": ["zod@3.25.76", "", {}, "sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ=="],
+
+    "log-update/slice-ansi": ["slice-ansi@7.1.2", "", { "dependencies": { "ansi-styles": "^6.2.1", "is-fullwidth-code-point": "^5.0.0" } }, "sha512-iOBWFgUX7caIZiuutICxVgX1SdxwAVFFKwt1EvMYYec/NWO5meOJ6K5uQxhrYBdQJne4KxiqZc+KptFOWFSI9w=="],
+
+    "npm-run-path/path-key": ["path-key@4.0.0", "", {}, "sha512-haREypq7xkM7ErfgIyA0z+Bj4AGKlMSdlQE2jvJo6huWD1EdkKYV+G/T4nq0YEF2vgTT8kqMFKo1uHn950r4SQ=="],
+
+    "restore-cursor/onetime": ["onetime@7.0.0", "", { "dependencies": { "mimic-function": "^5.0.0" } }, "sha512-VXJjc87FScF88uafS3JllDgvAm+c/Slfz06lorj2uAY34rlUu0Nt+v8wreiImcrgAjjIHp1rXpTDlLOGw29WwQ=="],
+
+    "log-update/slice-ansi/is-fullwidth-code-point": ["is-fullwidth-code-point@5.1.0", "", { "dependencies": { "get-east-asian-width": "^1.3.1" } }, "sha512-5XHYaSyiqADb4RnZ1Bdad6cPp8Toise4TzEjcOYDHZkTCbKgiUl7WTUCpNWHuxmDt91wnsZBc9xinNzopv3JMQ=="],
+  }
+}

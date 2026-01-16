@@ -1,0 +1,33 @@
+version: "1.0"
+
+# Rate limiting configuration
+global:
+  default: 1000/hour
+
+tiers:
+  anonymous:
+    default: 100/hour
+    burst: 20
+  
+  authenticated:
+    default: 1000/hour
+    burst: 50
+  
+  premium:
+    default: 10000/hour
+    burst: 200
+  
+  admin:
+    default: unlimited
+
+endpoints:
+  /api/v1/auth/login:
+    limit: 10/minute
+    lockout: 5 minutes after 5 failures
+  
+  /api/v1/auth/register:
+    limit: 5/hour per IP
+  
+  /api/v1/media/upload:
+    limit: 50/hour
+    maxSize: 50MB

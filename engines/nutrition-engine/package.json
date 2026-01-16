@@ -1,0 +1,22 @@
+{
+  "name": "@gymato/nutrition-engine",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "bun test",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "^3.22.4",
+    "@gymato/types": "workspace:*",
+    "@gymato/errors": "workspace:*"
+  },
+  "devDependencies": {
+    "bun-types": "^1.0.25"
+  }
+}
