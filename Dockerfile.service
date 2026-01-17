@@ -69,9 +69,8 @@ RUN addgroup -g 1001 -S app && adduser -S -u 1001 -G app app
 COPY --from=builder --chown=app:app /app/services/${SERVICE}/dist/ ./dist/
 COPY --from=builder --chown=app:app /app/services/${SERVICE}/package.json ./
 
-# Config directory is optional - services may or may not have it
-# The empty config dir is created regardless for consistency
-RUN mkdir -p ./config
+# Copy config directory (Must exist in source service, or be empty)
+COPY --from=builder --chown=app:app /app/services/${SERVICE}/config ./config
 
 # Switch to non-root user
 USER app
