@@ -21,7 +21,9 @@
     "@gymato/types": "workspace:*",
     "@gymato/validation": "workspace:*",
     "@gymato/errors": "workspace:*",
-    "@gymato/utils": "workspace:*"
+    "@gymato/utils": "workspace:*",
+    "jose": "^5.2.0",
+    "postgres": "^3.4.3"
   },
   "devDependencies": {
     "bun-types": "^1.0.25"
