@@ -20,6 +20,9 @@ const configSchema = z.object({
   // bcrypt
   bcryptRounds: z.coerce.number().default(12),
 
+  // Encryption (for 2FA secrets)
+  encryptionMasterKey: z.string().min(32, 'ENCRYPTION_MASTER_KEY must be at least 32 characters'),
+
   // Service info
   serviceName: z.string().default('identity-service'),
 });
@@ -41,6 +44,7 @@ export function loadConfig(): Config {
       jwtAccessExpiry: process.env.JWT_ACCESS_EXPIRY,
       jwtRefreshExpiry: process.env.JWT_REFRESH_EXPIRY,
       bcryptRounds: process.env.BCRYPT_ROUNDS,
+      encryptionMasterKey: process.env.ENCRYPTION_MASTER_KEY,
       serviceName: process.env.SERVICE_NAME,
     };
 

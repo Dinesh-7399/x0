@@ -5,18 +5,18 @@ import QRCode from 'qrcode';
 import type { IUserRepository } from '../../domain/repositories/IUserRepository.js';
 import type { ITwoFactorRepository } from '../../domain/repositories/ITwoFactorRepository.js';
 import type { IHashService } from './interfaces.js';
+import type { IEncryptionService } from '../../infrastructure/services/EncryptionService.js';
 import type { MessageResponse } from '../dtos/auth.dto.js';
 import { TwoFactorSecret } from '../../domain/entities/TwoFactorSecret.js';
 import { UserNotFoundError, TwoFactorError } from '../errors/AuthErrors.js';
-import { getConfig } from '../../config/index.js';
 
 /**
  * 2FA Setup Response
  */
 export interface TwoFactorSetupResponse {
-  secret: string;
+  secret: string;      // Plaintext shown ONCE to user
   qrCode: string;
-  backupCodes: string[];
+  backupCodes: string[]; // Plaintext shown ONCE to user
 }
 
 /**
@@ -36,7 +36,11 @@ export interface ITwoFactorService {
  * TwoFactorService
  * 
  * Handles TOTP-based two-factor authentication.
- * Single Responsibility: 2FA operations only.
+ * 
+ * SECURITY:
+ * - TOTP secrets are encrypted with AES-256-GCM before storage
+ * - Backup codes are bcrypt hashed before storage
+ * - Plaintext values are only returned to user once during setup
  */
 export class TwoFactorService implements ITwoFactorService {
   private readonly issuer = 'Gymato';
@@ -45,10 +49,12 @@ export class TwoFactorService implements ITwoFactorService {
     private readonly userRepository: IUserRepository,
     private readonly twoFactorRepository: ITwoFactorRepository,
     private readonly hashService: IHashService,
+    private readonly encryptionService: IEncryptionService,
   ) { }
 
   /**
    * Setup 2FA for user (generate secret, QR code)
+   * Returns plaintext values ONCE - they are encrypted/hashed before storage
    */
   async setup(userId: string): Promise<TwoFactorSetupResponse> {
     // Verify user exists
@@ -72,13 +78,20 @@ export class TwoFactorService implements ITwoFactorService {
       period: 30,
     });
 
-    const secret = totp.secret.base32;
+    const plaintextSecret = totp.secret.base32;
 
-    // Generate backup codes
-    const backupCodes = this.generateBackupCodes(8);
+    // Generate plaintext backup codes
+    const plaintextBackupCodes = this.generateBackupCodes(8);
 
-    // Save secret (not enabled yet)
-    const twoFactorSecret = TwoFactorSecret.create(userId, secret, backupCodes);
+    // SECURITY: Encrypt secret before storage
+    const encryptedSecretData = await this.encryptionService.encrypt(plaintextSecret);
+    const encryptedSecret = JSON.stringify(encryptedSecretData);
+
+    // SECURITY: Hash each backup code before storage
+    const hashedBackupCodes = await this.hashBackupCodes(plaintextBackupCodes);
+
+    // Save encrypted/hashed values (not enabled yet)
+    const twoFactorSecret = TwoFactorSecret.create(userId, encryptedSecret, hashedBackupCodes);
 
     // Delete any existing and save new
     await this.twoFactorRepository.deleteByUserId(userId);
@@ -88,10 +101,11 @@ export class TwoFactorService implements ITwoFactorService {
     const otpauthUrl = totp.toString();
     const qrCode = await QRCode.toDataURL(otpauthUrl);
 
+    // Return plaintext values to user (shown ONCE)
     return {
-      secret,
+      secret: plaintextSecret,
       qrCode,
-      backupCodes,
+      backupCodes: plaintextBackupCodes,
     };
   }
 
@@ -108,8 +122,9 @@ export class TwoFactorService implements ITwoFactorService {
       throw new TwoFactorError('2FA is already enabled');
     }
 
-    // Verify token
-    const isValid = this.verifyToken(twoFactor.secret, token);
+    // Decrypt secret and verify token
+    const decryptedSecret = await this.decryptSecret(twoFactor.secret);
+    const isValid = this.verifyToken(decryptedSecret, token);
     if (!isValid) {
       throw new TwoFactorError('Invalid verification code');
     }
@@ -130,8 +145,9 @@ export class TwoFactorService implements ITwoFactorService {
       throw new TwoFactorError('2FA is not enabled');
     }
 
-    // Verify token
-    const isValid = this.verifyToken(twoFactor.secret, token);
+    // Decrypt secret and verify token
+    const decryptedSecret = await this.decryptSecret(twoFactor.secret);
+    const isValid = this.verifyToken(decryptedSecret, token);
     if (!isValid) {
       throw new TwoFactorError('Invalid verification code');
     }
@@ -151,11 +167,14 @@ export class TwoFactorService implements ITwoFactorService {
       return true; // 2FA not enabled, pass through
     }
 
-    return this.verifyToken(twoFactor.secret, token);
+    // Decrypt secret and verify
+    const decryptedSecret = await this.decryptSecret(twoFactor.secret);
+    return this.verifyToken(decryptedSecret, token);
   }
 
   /**
    * Verify and consume backup code
+   * Compares input against bcrypt hashes
    */
   async verifyBackupCode(userId: string, code: string): Promise<boolean> {
     const twoFactor = await this.twoFactorRepository.findByUserId(userId);
@@ -163,9 +182,17 @@ export class TwoFactorService implements ITwoFactorService {
       return false;
     }
 
-    if (twoFactor.useBackupCode(code)) {
-      await this.twoFactorRepository.update(twoFactor);
-      return true;
+    // Check each hashed backup code
+    const backupCodes = twoFactor.backupCodes;
+    for (let i = 0; i < backupCodes.length; i++) {
+      const isMatch = await this.hashService.compare(code, backupCodes[i]);
+      if (isMatch) {
+        // Remove the used code
+        backupCodes.splice(i, 1);
+        twoFactor.regenerateBackupCodes(backupCodes);
+        await this.twoFactorRepository.update(twoFactor);
+        return true;
+      }
     }
 
     return false;
@@ -188,22 +215,49 @@ export class TwoFactorService implements ITwoFactorService {
       throw new TwoFactorError('2FA is not enabled');
     }
 
-    // Verify token
-    const isValid = this.verifyToken(twoFactor.secret, token);
+    // Decrypt secret and verify token
+    const decryptedSecret = await this.decryptSecret(twoFactor.secret);
+    const isValid = this.verifyToken(decryptedSecret, token);
     if (!isValid) {
       throw new TwoFactorError('Invalid verification code');
     }
 
-    // Generate new backup codes
-    const backupCodes = this.generateBackupCodes(8);
-    twoFactor.regenerateBackupCodes(backupCodes);
+    // Generate new plaintext codes
+    const plaintextBackupCodes = this.generateBackupCodes(8);
+
+    // Hash codes before storage
+    const hashedBackupCodes = await this.hashBackupCodes(plaintextBackupCodes);
+    twoFactor.regenerateBackupCodes(hashedBackupCodes);
     await this.twoFactorRepository.update(twoFactor);
 
-    return { backupCodes };
+    // Return plaintext codes to user (shown ONCE)
+    return { backupCodes: plaintextBackupCodes };
   }
 
   // ============ PRIVATE HELPERS ============
 
+  /**
+   * Decrypt secret from storage
+   */
+  private async decryptSecret(encryptedSecret: string): Promise<string> {
+    try {
+      const encryptedData = JSON.parse(encryptedSecret);
+      return await this.encryptionService.decrypt(encryptedData);
+    } catch (error) {
+      throw new TwoFactorError('Failed to decrypt 2FA secret');
+    }
+  }
+
+  /**
+   * Hash all backup codes with bcrypt
+   */
+  private async hashBackupCodes(codes: string[]): Promise<string[]> {
+    return Promise.all(codes.map(code => this.hashService.hash(code)));
+  }
+
+  /**
+   * Verify TOTP token against decrypted secret
+   */
   private verifyToken(secret: string, token: string): boolean {
     const totp = new OTPAuth.TOTP({
       issuer: this.issuer,
@@ -218,6 +272,9 @@ export class TwoFactorService implements ITwoFactorService {
     return delta !== null;
   }
 
+  /**
+   * Generate random backup codes
+   */
   private generateBackupCodes(count: number): string[] {
     const codes: string[] = [];
     for (let i = 0; i < count; i++) {

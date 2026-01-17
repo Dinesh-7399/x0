@@ -14,6 +14,7 @@ import { PgLoginHistoryRepository } from '../repositories/PgLoginHistoryReposito
 import { JwtService } from '../services/JwtService.js';
 import { HashService } from '../services/HashService.js';
 import { RateLimiterService, InMemoryRateLimitStore } from '../services/RateLimiterService.js';
+import { EncryptionService } from '../services/EncryptionService.js';
 
 // Application Services
 import { AuthService } from '../../application/services/AuthService.js';
@@ -36,6 +37,7 @@ export const ExtendedServiceKeys = {
   ...ServiceKeys,
   // Infrastructure
   RateLimiterService: 'RateLimiterService',
+  EncryptionService: 'EncryptionService',
   // Repositories
   TwoFactorRepository: 'TwoFactorRepository',
   LoginHistoryRepository: 'LoginHistoryRepository',
@@ -70,6 +72,7 @@ export function bootstrap(): Container {
   container.registerFactory(ServiceKeys.JwtService, () => new JwtService());
   container.registerFactory(ServiceKeys.HashService, () => new HashService());
   container.registerFactory(ExtendedServiceKeys.RateLimiterService, () => new RateLimiterService(new InMemoryRateLimitStore()));
+  container.registerFactory(ExtendedServiceKeys.EncryptionService, () => new EncryptionService());
 
   // ============ APPLICATION SERVICES ============
   container.registerFactory(ServiceKeys.AuthService, () => new AuthService(
@@ -101,6 +104,7 @@ export function bootstrap(): Container {
     container.resolve(ServiceKeys.UserRepository),
     container.resolve(ExtendedServiceKeys.TwoFactorRepository),
     container.resolve(ServiceKeys.HashService),
+    container.resolve(ExtendedServiceKeys.EncryptionService),
   ));
 
   container.registerFactory(ExtendedServiceKeys.LoginHistoryService, () => new LoginHistoryService(
