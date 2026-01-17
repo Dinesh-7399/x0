@@ -1,0 +1,33 @@
+# Version Control
+.git/
+.gitignore
+
+# NodeJS
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Build Outputs
+dist/
+coverage/
+
+# Environment Variables
+.env
+.env.*
+!.env.example
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Services ignoring specific files
+services/**/node_modules
+services/**/dist
+services/**/.env
+services/**/.env.*
+!services/**/.env.example
