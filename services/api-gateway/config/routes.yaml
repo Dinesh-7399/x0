@@ -1,35 +1,81 @@
+# config/routes.yaml
 version: "1.0"
 
-# Route definitions for API Gateway
 routes:
-  # Authentication (no auth required)
+  # ============================================
+  # AUTHENTICATION ROUTES (No Auth Required)
+  # ============================================
+  
   - path: /api/v1/auth/register
     method: POST
     target: identity-service:8080
     stripPrefix: /api/v1
     auth: false
+    timeout: 10000
     rateLimit:
       points: 5
-      duration: 60
+      duration: 3600  # 5 requests per hour per IP
 
   - path: /api/v1/auth/login
     method: POST
     target: identity-service:8080
     stripPrefix: /api/v1
     auth: false
+    timeout: 5000
     rateLimit:
       points: 10
-      duration: 60
+      duration: 60  # 10 requests per minute
 
   - path: /api/v1/auth/refresh
     method: POST
     target: identity-service:8080
     stripPrefix: /api/v1
     auth: false
+    timeout: 5000
 
-  # User Management (requires auth)
-  - path: /api/v1/users/*
-    method: [GET, PUT, PATCH, DELETE]
+  - path: /api/v1/auth/verify-email
+    method: POST
+    target: identity-service:8080
+    stripPrefix: /api/v1
+    auth: false
+
+  - path: /api/v1/auth/forgot-password
+    method: POST
+    target: identity-service:8080
+    stripPrefix: /api/v1
+    auth: false
+    rateLimit:
+      points: 3
+      duration: 3600  # 3 requests per hour
+
+  - path: /api/v1/auth/reset-password
+    method: POST
+    target: identity-service:8080
+    stripPrefix: /api/v1
+    auth: false
+
+  # ============================================
+  # AUTHENTICATED ROUTES
+  # ============================================
+
+  - path: /api/v1/auth/logout
+    method: POST
+    target: identity-service:8080
+    stripPrefix: /api/v1
+    auth: true
+
+  - path: /api/v1/auth/change-password
+    method: POST
+    target: identity-service:8080
+    stripPrefix: /api/v1
+    auth: true
+
+  # ============================================
+  # USER ROUTES
+  # ============================================
+
+  - path: /api/v1/users/me
+    method: [GET, PUT, PATCH]
     target: user-service:8081
     stripPrefix: /api/v1
     auth: true
@@ -37,35 +83,70 @@ routes:
       points: 100
       duration: 60
 
-  # Gym Management
+  - path: /api/v1/users/me/avatar
+    method: POST
+    target: user-service:8081
+    stripPrefix: /api/v1
+    auth: true
+    timeout: 30000  # 30 seconds for file upload
+    maxBodySize: "5MB"
+
+  - path: /api/v1/users/me/preferences
+    method: [GET, PUT]
+    target: user-service:8081
+    stripPrefix: /api/v1
+    auth: true
+
+  - path: /api/v1/users/search
+    method: GET
+    target: user-service:8081
+    stripPrefix: /api/v1
+    auth: true
+    cache:
+      enabled: true
+      ttl: 300  # 5 minutes
+
+  # ============================================
+  # GYM ROUTES
+  # ============================================
+
   - path: /api/v1/gyms/*
     method: [GET, POST, PUT, DELETE]
     target: gym-service:8082
     stripPrefix: /api/v1
     auth: true
 
-  # Chat (WebSocket)
+  - path: /api/v1/gyms/search
+    method: GET
+    target: gym-service:8082
+    stripPrefix: /api/v1
+    auth: false  # Public search
+    cache:
+      enabled: true
+      ttl: 600  # 10 minutes
+
+  # ============================================
+  # CHAT ROUTES (WebSocket)
+  # ============================================
+
   - path: /api/v1/chat/*
+    method: GET
     target: chat-service:8083
     stripPrefix: /api/v1
-    protocol: websocket
     auth: true
+    protocol: websocket
 
-  # Media Uploads
+  # ============================================
+  # MEDIA ROUTES
+  # ============================================
+
   - path: /api/v1/media/upload
     method: POST
     target: media-service:8084
     stripPrefix: /api/v1
     auth: true
-    maxBodySize: 50MB
-    timeout: 30000
-
-  # Public endpoints (cached)
-  - path: /api/v1/gyms/search
-    method: GET
-    target: gym-service:8082
-    stripPrefix: /api/v1
-    auth: false
-    cache:
-      enabled: true
-      ttl: 300
+    timeout: 60000  # 1 minute for large files
+    maxBodySize: "50MB"
+    rateLimit:
+      points: 50
+      duration: 3600  # 50 uploads per hour
