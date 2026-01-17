@@ -7,13 +7,16 @@ import { logger } from './core/logger.js';
 import { getRoutes } from './config/routes.config.js';
 import { RouteMatcher } from './core/RouteMatcher.js';
 import { HttpProxy } from './proxy/HttpProxy.js';
+import { verifyToken, extractTokenFromHeader } from './utils/jwt.utils.js';
 
 // Define context variables for type-safe c.set() and c.get()
 type AppVariables = {
   requestId: string;
   userId?: string;
+  email?: string;
   roles?: string[];
   gymId?: string;
+  authenticated?: boolean;
 };
 
 // Load config
@@ -111,7 +114,7 @@ if (config.nodeEnv === 'development') {
 }
 
 /**
- * API ROUTING (The Magic Happens Here!)
+ * API ROUTING WITH AUTHENTICATION
  */
 app.all('/api/*', async (c) => {
   const method = c.req.method as any;
@@ -137,11 +140,59 @@ app.all('/api/*', async (c) => {
     );
   }
 
-  requestLogger.debug({ target: matchedRoute.target }, 'Route matched');
+  requestLogger.debug({ target: matchedRoute.target, auth: matchedRoute.auth }, 'Route matched');
 
-  // TODO: Add authentication middleware (check matchedRoute.auth)
-  // TODO: Add rate limiting middleware (check matchedRoute.rateLimit)
-  // TODO: Add circuit breaker check
+  // ✨ CHECK IF ROUTE REQUIRES AUTHENTICATION
+  if (matchedRoute.auth) {
+    // Extract and verify token
+    const authHeader = c.req.header('Authorization');
+    const token = extractTokenFromHeader(authHeader);
+
+    if (!token) {
+      requestLogger.warn('Missing authentication token');
+      return c.json(
+        {
+          error: 'TOKEN_MISSING',
+          message: 'Authentication token is required',
+        },
+        401,
+      );
+    }
+
+    const decoded = verifyToken(token);
+
+    if (decoded.expired) {
+      requestLogger.warn('Token expired');
+      return c.json(
+        {
+          error: 'TOKEN_EXPIRED',
+          message: 'Authentication token has expired',
+          hint: 'Use refresh token to get a new access token',
+        },
+        401,
+      );
+    }
+
+    if (!decoded.valid) {
+      requestLogger.warn('Invalid token');
+      return c.json(
+        {
+          error: 'TOKEN_INVALID',
+          message: 'Authentication token is invalid',
+        },
+        401,
+      );
+    }
+
+    // Set user context
+    c.set('userId', decoded.payload.sub);
+    c.set('email', decoded.payload.email);
+    c.set('roles', decoded.payload.roles || []);
+    c.set('gymId', decoded.payload.gymId);
+    c.set('authenticated', true);
+
+    requestLogger.debug({ userId: decoded.payload.sub }, 'User authenticated');
+  }
 
   // Forward request to backend service
   try {
@@ -198,7 +249,7 @@ logger.info(
     pid: process.pid,
     routes: routes.length,
   },
-  '🚪 API Gateway started',
+  '🚪 API Gateway started with JWT authentication',
 );
 
 logger.info(`📊 Health: http://localhost:${config.port}/health`);
