@@ -11,9 +11,11 @@ import { JwtService } from '../services/JwtService.js';
 
 // Application Services
 import { UserProfileService } from '../../application/services/UserProfileService.js';
+import { UserAdminService } from '../../application/services/UserAdminService.js';
 
 // Controllers
 import { ProfileController } from '../../interfaces/http/controllers/ProfileController.js';
+import { AdminController } from '../../interfaces/http/controllers/AdminController.js';
 
 /**
  * Bootstrap
@@ -37,9 +39,18 @@ export function bootstrap(): Container {
     container.resolve(ServiceKeys.UserRepository)
   ));
 
+  container.registerFactory(ServiceKeys.UserAdminService, () => new UserAdminService(
+    container.resolve(ServiceKeys.UserRepository),
+    container.resolve(ServiceKeys.ProfileRepository)
+  ));
+
   // ============ CONTROLLERS ============
   container.registerFactory(ServiceKeys.ProfileController, () => new ProfileController(
     container.resolve(ServiceKeys.UserProfileService)
+  ));
+
+  container.registerFactory(ServiceKeys.AdminController, () => new AdminController(
+    container.resolve(ServiceKeys.UserAdminService)
   ));
 
   return container;

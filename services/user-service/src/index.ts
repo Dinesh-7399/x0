@@ -10,6 +10,7 @@ import { createProfileRoutes } from './interfaces/http/routes/profile.routes.js'
 import { errorHandler } from './interfaces/http/middleware/errorHandler.js';
 import { closePool } from './infrastructure/database/postgres.js';
 import type { ProfileController } from './interfaces/http/controllers/ProfileController.js';
+import type { AdminController } from './interfaces/http/controllers/AdminController.js';
 
 // Load configuration
 const config = getConfig();
@@ -19,6 +20,7 @@ const container = bootstrap();
 
 // Resolve controllers
 const profileController = container.resolve<ProfileController>(ServiceKeys.ProfileController);
+const adminController = container.resolve<AdminController>(ServiceKeys.AdminController);
 
 // Create Hono app
 const app = new Hono();
@@ -40,6 +42,12 @@ const profileRouter = new Hono();
 profileRouter.route('/', createProfileRoutes(profileController));
 app.route('/users', profileRouter);
 
+// Admin routes
+import { createAdminRoutes } from './interfaces/http/routes/admin.routes.js';
+const adminRouter = new Hono();
+adminRouter.route('/', createAdminRoutes(adminController));
+app.route('/users/admin', adminRouter);
+
 // 404 handler
 app.notFound((c) => c.json({ error: 'NOT_FOUND', message: `Route ${c.req.method} ${c.req.path} not found` }, 404));
 
@@ -55,6 +63,7 @@ console.log(`
    Environment: ${config.nodeEnv}
    
    Profiles:       /users/*
+   Admin:          /users/admin/*
 `);
 
 // Graceful shutdown

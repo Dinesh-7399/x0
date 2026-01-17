@@ -10,4 +10,5 @@ export interface IUserRepository {
   findById(id: string): Promise<User | null>;
   findByEmail(email: string): Promise<User | null>;
   findAll(limit?: number, offset?: number): Promise<{ users: User[], total: number }>;
+  updateStatus(id: string, status: string): Promise<void>;
 }

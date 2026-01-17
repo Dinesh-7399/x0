@@ -36,6 +36,15 @@ export class PgUserRepository implements IUserRepository {
     };
   }
 
+  async updateStatus(id: string, status: string): Promise<void> {
+    const db = getDb();
+    await db`
+      UPDATE users 
+      SET status = ${status}, updated_at = NOW() 
+      WHERE id = ${id}
+    `;
+  }
+
   private toDomain(row: UserRow): User {
     return User.fromPersistence({
       id: row.id,
