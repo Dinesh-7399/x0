@@ -15,6 +15,9 @@ const configSchema = z.object({
   // JWT (For verification)
   jwtSecret: z.string().min(32, 'JWT_SECRET must be at least 32 characters'),
 
+  // Redis
+  redisUrl: z.string().default('redis://localhost:6379'),
+
   // Service info
   serviceName: z.string().default('user-service'),
 });
@@ -33,6 +36,7 @@ export function loadConfig(): Config {
       nodeEnv: process.env.NODE_ENV,
       databaseUrl: process.env.DATABASE_URL,
       jwtSecret: process.env.JWT_SECRET,
+      redisUrl: process.env.REDIS_URL,
       serviceName: process.env.SERVICE_NAME,
     };
 

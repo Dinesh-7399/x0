@@ -14,20 +14,19 @@ import {
   InvalidRefreshTokenError,
   UserNotFoundError,
 } from '../errors/AuthErrors.js';
+import type { Publisher } from '@gymato/messaging';
+import { EventTypes } from '@gymato/messaging';
 import { getConfig } from '../../config/index.js';
 
-/**
- * AuthService
- * 
- * Handles core authentication operations.
- * Single Responsibility: Authentication concerns only.
- */
+// ... (other imports)
+
 export class AuthService implements IAuthService {
   constructor(
     private readonly userRepository: IUserRepository,
     private readonly refreshTokenRepository: IRefreshTokenRepository,
     private readonly jwtService: IJwtService,
     private readonly hashService: IHashService,
+    private readonly messageBus: Publisher,
   ) { }
 
   /**
@@ -38,6 +37,8 @@ export class AuthService implements IAuthService {
     password: string,
     metadata?: { ipAddress?: string; userAgent?: string },
   ): Promise<AuthResponse> {
+    // ... (existing checks and user creation)
+
     // Check if user exists
     const existingUser = await this.userRepository.findByEmail(email);
     if (existingUser) {
@@ -57,6 +58,13 @@ export class AuthService implements IAuthService {
     });
 
     await this.userRepository.save(user);
+
+    // Publish event
+    await this.messageBus.publish(EventTypes.USER_REGISTERED, {
+      userId: user.id,
+      email: user.email,
+      timestamp: new Date().toISOString(),
+    });
 
     // Generate tokens
     const tokens = await this.generateTokens(user, metadata);

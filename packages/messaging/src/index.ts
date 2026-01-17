@@ -92,3 +92,68 @@ export const EventTypes = {
 } as const;
 
 export type EventType = typeof EventTypes[keyof typeof EventTypes];
+
+import Redis from 'ioredis';
+
+/**
+ * Redis-based event bus for cross-service communication
+ */
+export function createRedisBus(redisUrl: string): Publisher & Subscriber {
+  const publisher = new Redis(redisUrl);
+  const subscriber = new Redis(redisUrl);
+
+  // Local handlers map: type -> handlers[]
+  const handlers = new Map<string, Array<(message: Message) => Promise<void>>>();
+
+  // Global message listener for the subscriber connection
+  subscriber.on('message', async (channel, messageStr) => {
+    try {
+      const message = JSON.parse(messageStr);
+      const typeHandlers = handlers.get(channel) || [];
+
+      // Execute all handlers for this type
+      await Promise.all(typeHandlers.map(h => h(message)));
+    } catch (error) {
+      console.error(`[RedisBus] Error handling message on channel ${channel}:`, error);
+    }
+  });
+
+  return {
+    async publish<T>(type: string, payload: T, options?: PublishOptions): Promise<void> {
+      const message: Message<T> = {
+        id: `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
+        type,
+        payload,
+        timestamp: new Date().toISOString(),
+        correlationId: options?.correlationId,
+      };
+
+      await publisher.publish(type, JSON.stringify(message));
+    },
+
+    async subscribe<T>(
+      type: string,
+      handler: (message: Message<T>) => Promise<void>
+    ): Promise<void> {
+      // If this is the first handler for this type, subscribe to the Redis channel
+      if (!handlers.has(type)) {
+        await subscriber.subscribe(type);
+      }
+
+      const typeHandlers = handlers.get(type) ?? [];
+      typeHandlers.push(handler as (message: Message) => Promise<void>);
+      handlers.set(type, typeHandlers);
+    },
+
+    async unsubscribe(type: string): Promise<void> {
+      handlers.delete(type);
+      await subscriber.unsubscribe(type);
+    },
+
+    async close(): Promise<void> {
+      handlers.clear();
+      await publisher.quit();
+      await subscriber.quit();
+    },
+  };
+}

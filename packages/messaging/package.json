@@ -13,5 +13,8 @@
   },
   "devDependencies": {
     "bun-types": "^1.0.25"
+  },
+  "dependencies": {
+    "ioredis": "^5.9.2"
   }
 }

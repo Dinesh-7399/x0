@@ -279,4 +279,5 @@ process.on('uncaughtException', (error) => {
   process.exit(1);
 });
 
-export default app;
+// Named export for testing purposes (do not use default export to prevent Bun auto-serve)
+export { app };

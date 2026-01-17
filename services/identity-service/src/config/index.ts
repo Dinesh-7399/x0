@@ -23,6 +23,9 @@ const configSchema = z.object({
   // Encryption (for 2FA secrets)
   encryptionMasterKey: z.string().min(32, 'ENCRYPTION_MASTER_KEY must be at least 32 characters'),
 
+  // Redis
+  redisUrl: z.string().default('redis://localhost:6379'),
+
   // Service info
   serviceName: z.string().default('identity-service'),
 });
@@ -45,6 +48,7 @@ export function loadConfig(): Config {
       jwtRefreshExpiry: process.env.JWT_REFRESH_EXPIRY,
       bcryptRounds: process.env.BCRYPT_ROUNDS,
       encryptionMasterKey: process.env.ENCRYPTION_MASTER_KEY,
+      redisUrl: process.env.REDIS_URL,
       serviceName: process.env.SERVICE_NAME,
     };
 

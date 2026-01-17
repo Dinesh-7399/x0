@@ -195,6 +195,9 @@
     "packages/database": {
       "name": "@gymato/database",
       "version": "0.1.0",
+      "dependencies": {
+        "postgres": "^3.4.3",
+      },
       "devDependencies": {
         "bun-types": "^1.0.25",
       },
@@ -209,6 +212,9 @@
     "packages/messaging": {
       "name": "@gymato/messaging",
       "version": "0.1.0",
+      "dependencies": {
+        "ioredis": "^5.9.2",
+      },
       "devDependencies": {
         "bun-types": "^1.0.25",
       },

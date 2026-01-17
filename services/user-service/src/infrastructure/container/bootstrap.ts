@@ -1,6 +1,8 @@
 // src/infrastructure/container/bootstrap.ts
 
 import { Container, ServiceKeys } from './Container.js';
+import { getConfig } from '../../config/index.js';
+import { createRedisBus } from '@gymato/messaging';
 
 // Repositories
 import { PgProfileRepository } from '../repositories/PgProfileRepository.js';
@@ -27,6 +29,10 @@ export function bootstrap(): Container {
   container.clear();
 
   // ============ INFRASTRUCTURE ============
+  // ============ INFRASTRUCTURE ============
+  const config = getConfig();
+  container.registerFactory(ServiceKeys.MessageBus, () => createRedisBus(config.redisUrl));
+
   container.registerFactory(ServiceKeys.JwtService, () => new JwtService());
 
   // ============ REPOSITORIES ============

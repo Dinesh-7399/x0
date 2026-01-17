@@ -33,27 +33,52 @@ export function parseDatabaseUrl(url: string): DatabaseConfig {
   };
 }
 
+import postgres from 'postgres';
+
 /**
- * Placeholder for database connection
- * In real implementation, this would use pg or postgres.js
+ * Create a database connection pool
  */
 export async function createDbConnection(
-  _config: DatabaseConfig
+  config: DatabaseConfig
 ): Promise<DatabaseConnection> {
-  // This is a stub - actual implementation requires postgres driver
-  console.log('[database] Connection stub initialized - implement with postgres driver');
+  const sql = postgres({
+    host: config.host,
+    port: config.port,
+    database: config.database,
+    username: config.user,
+    password: config.password,
+    ssl: config.ssl,
+    max: config.maxConnections || 10,
+    onnotice: () => { }, // excessive logging
+  });
+
+  // Test connection
+  try {
+    await sql`SELECT 1`;
+    console.log(`[database] Connected to ${config.database} at ${config.host}:${config.port}`);
+  } catch (error) {
+    console.error('[database] Connection failed:', error);
+    throw error;
+  }
 
   return {
-    query: async <T>(_sql: string, _params?: unknown[]): Promise<T[]> => {
-      throw new Error('Database connection not implemented. Install and configure postgres driver.');
+    query: async <T>(queryStr: string, params: unknown[] = []): Promise<T[]> => {
+      // postgres.js uses template literals normally, but for raw strings we need unsafe
+      // Note: This is an adapter to make it look like a generic query interface
+      // Real usage should likely expose the `sql` object directly for better DX
+      return (await sql.unsafe(queryStr, params as any[])) as unknown as T[];
     },
-    execute: async (_sql: string, _params?: unknown[]): Promise<{ affectedRows: number }> => {
-      throw new Error('Database connection not implemented. Install and configure postgres driver.');
+    execute: async (queryStr: string, params: unknown[] = []): Promise<{ affectedRows: number }> => {
+      const result = await sql.unsafe(queryStr, params as any[]);
+      return { affectedRows: result.count };
     },
     close: async () => {
-      // no-op
+      await sql.end();
     },
-    isConnected: () => false,
+    isConnected: () => {
+      // postgres.js manages connection state internally
+      return true;
+    },
   };
 }
 

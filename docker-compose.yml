@@ -91,6 +91,7 @@ services:
       - DATABASE_URL=postgresql://gymato:gymato_dev@postgres:5432/gymato
       - REDIS_URL=redis://redis:6379
       - JWT_SECRET=dev-jwt-secret-change-in-production
+      - ENCRYPTION_MASTER_KEY=dev-encryption-master-key-change-in-prod-min-32-chars
     depends_on:
       postgres:
         condition: service_healthy
@@ -115,6 +116,7 @@ services:
       - NODE_ENV=development
       - DATABASE_URL=postgresql://gymato:gymato_dev@postgres:5432/gymato
       - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=dev-jwt-secret-change-in-production
     depends_on:
       postgres:
         condition: service_healthy

@@ -99,4 +99,5 @@ console.log(`
 process.on('SIGTERM', async () => { server.stop(); await closePool(); process.exit(0); });
 process.on('SIGINT', async () => { server.stop(); await closePool(); process.exit(0); });
 
-export default app;
+// Named export for testing purposes (do not use default export to prevent Bun auto-serve)
+export { app };

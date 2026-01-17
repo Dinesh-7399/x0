@@ -1,6 +1,8 @@
 // src/infrastructure/container/bootstrap.ts
 
 import { Container, ServiceKeys } from './Container.js';
+import { getConfig } from '../../config/index.js';
+import { createRedisBus } from '@gymato/messaging';
 
 // Repositories
 import { PgUserRepository } from '../repositories/PgUserRepository.js';
@@ -69,6 +71,9 @@ export function bootstrap(): Container {
   container.registerFactory(ExtendedServiceKeys.LoginHistoryRepository, () => new PgLoginHistoryRepository());
 
   // ============ INFRASTRUCTURE SERVICES ============
+  const config = getConfig();
+  container.registerFactory(ServiceKeys.MessageBus, () => createRedisBus(config.redisUrl));
+
   container.registerFactory(ServiceKeys.JwtService, () => new JwtService());
   container.registerFactory(ServiceKeys.HashService, () => new HashService());
   container.registerFactory(ExtendedServiceKeys.RateLimiterService, () => new RateLimiterService(new InMemoryRateLimitStore()));
@@ -80,6 +85,7 @@ export function bootstrap(): Container {
     container.resolve(ServiceKeys.RefreshTokenRepository),
     container.resolve(ServiceKeys.JwtService),
     container.resolve(ServiceKeys.HashService),
+    container.resolve(ServiceKeys.MessageBus),
   ));
 
   container.registerFactory(ServiceKeys.VerificationService, () => new VerificationService(

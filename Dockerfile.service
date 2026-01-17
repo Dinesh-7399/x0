@@ -50,7 +50,7 @@ COPY services/${SERVICE} ./services/${SERVICE}
 
 # Build the service
 WORKDIR /app/services/${SERVICE}
-RUN bun build src/index.ts --outdir=dist --target=bun --minify
+RUN bun build src/index.ts --outdir=dist --target=bun --minify --external:pino --external:pino-pretty --external:thread-stream
 
 # ========================================
 # Stage 3: Production
@@ -67,7 +67,9 @@ RUN addgroup -g 1001 -S app && adduser -S -u 1001 -G app app
 
 # Copy only production files
 COPY --from=builder --chown=app:app /app/services/${SERVICE}/dist/ ./dist/
-COPY --from=builder --chown=app:app /app/services/${SERVICE}/package.json ./
+# Install production dependencies for external modules (like pino)
+# We don't copy package.json to avoid workspace resolution issues
+RUN bun add pino pino-pretty thread-stream
 
 # Copy config directory (Must exist in source service, or be empty)
 COPY --from=builder --chown=app:app /app/services/${SERVICE}/config ./config

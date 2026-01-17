@@ -11,6 +11,7 @@ import { errorHandler } from './interfaces/http/middleware/errorHandler.js';
 import { closePool } from './infrastructure/database/postgres.js';
 import type { ProfileController } from './interfaces/http/controllers/ProfileController.js';
 import type { AdminController } from './interfaces/http/controllers/AdminController.js';
+import type { UserProfileService } from './application/services/UserProfileService.js';
 
 // Load configuration
 const config = getConfig();
@@ -21,6 +22,33 @@ const container = bootstrap();
 // Resolve controllers
 const profileController = container.resolve<ProfileController>(ServiceKeys.ProfileController);
 const adminController = container.resolve<AdminController>(ServiceKeys.AdminController);
+
+// Subscribe to events
+import { EventTypes } from '@gymato/messaging';
+import type { Publisher, Subscriber } from '@gymato/messaging';
+
+const messageBus = container.resolve<Publisher & Subscriber>(ServiceKeys.MessageBus);
+const userProfileService = container.resolve<UserProfileService>(ServiceKeys.UserProfileService);
+
+// Subscribe to user registration (non-blocking)
+messageBus.subscribe(EventTypes.USER_REGISTERED, async (message: any) => {
+  const { userId, email } = message.payload;
+  console.log(`[Event] Received USER_REGISTERED for ${email}`);
+
+  try {
+    await userProfileService.createProfile(userId, {
+      firstName: 'New',
+      lastName: 'User',
+    });
+    console.log(`[Event] Created profile for ${userId}`);
+  } catch (error) {
+    console.error(`[Event] Failed to create profile for ${userId}:`, error);
+  }
+}).then(() => {
+  console.log('[Messaging] Subscribed to USER_REGISTERED events');
+}).catch((err) => {
+  console.error('[Messaging] Failed to subscribe to events:', err);
+});
 
 // Create Hono app
 const app = new Hono();
@@ -70,4 +98,5 @@ console.log(`
 process.on('SIGTERM', async () => { server.stop(); await closePool(); process.exit(0); });
 process.on('SIGINT', async () => { server.stop(); await closePool(); process.exit(0); });
 
-export default app;
+// Named export for testing purposes (do not use default export to prevent Bun auto-serve)
+export { app };

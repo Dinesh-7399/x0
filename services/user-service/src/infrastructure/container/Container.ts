@@ -18,6 +18,9 @@ export const ServiceKeys = {
   // Controllers
   ProfileController: 'ProfileController',
   AdminController: 'AdminController',
+
+  // Messaging
+  MessageBus: 'MessageBus',
 } as const;
 
 export type ServiceKey = typeof ServiceKeys[keyof typeof ServiceKeys];
