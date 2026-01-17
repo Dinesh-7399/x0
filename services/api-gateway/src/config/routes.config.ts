@@ -1,10 +1,14 @@
 // src/config/routes.config.ts
 import { readFileSync } from 'fs';
-import { join } from 'path';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 import YAML from 'yaml';
 import { z } from 'zod';
 import type { RouteConfig, RoutesConfig } from '../types/route.types.js';
 import { logger } from '../core/logger.js';
+
+// Get the directory of this module for relative path resolution
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /**
  * Zod schema for route validation
@@ -44,8 +48,9 @@ const RoutesConfigSchema = z.object({
  */
 export function loadRoutesConfig(): RoutesConfig {
   try {
-    // Read routes.yaml file
-    const configPath = join(process.cwd(), 'config', 'routes.yaml');
+    // Read routes.yaml file - use env var or resolve relative to module
+    const configPath = process.env.ROUTES_CONFIG_PATH
+      || join(__dirname, '..', '..', 'config', 'routes.yaml');
     const fileContent = readFileSync(configPath, 'utf-8');
 
     // Parse YAML
