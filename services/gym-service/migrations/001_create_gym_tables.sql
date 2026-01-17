@@ -1,8 +1,8 @@
 -- Database Migration: Create Gym Tables
 -- Run this migration to set up gym-service tables
 
--- Enable UUID extension if not exists
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+-- Enable pgcrypto extension for gen_random_uuid()
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 -- Main gyms table
 CREATE TABLE IF NOT EXISTS gyms (
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS gyms (
     operating_hours JSONB,
     
     -- Status
-    status VARCHAR(20) DEFAULT 'pending',
+    status VARCHAR(20) DEFAULT 'draft',
     verified BOOLEAN DEFAULT FALSE,
     owner_id UUID NOT NULL,
     

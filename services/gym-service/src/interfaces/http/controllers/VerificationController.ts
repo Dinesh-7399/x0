@@ -38,6 +38,13 @@ const SubmitReviewSchema = z.object({
   rejectionReason: z.string().optional(),
 });
 
+// Schema for applying corrections (re-submission)
+const CorrectionsSchema = SubmitReviewSchema.pick({
+  checklist: true,
+  photos: true,
+  notes: true,
+}).partial();
+
 export class VerificationController {
   constructor(private readonly verificationService: VerificationService) { }
 
@@ -65,7 +72,7 @@ export class VerificationController {
   async applyCorrections(c: Context): Promise<Response> {
     const gymId = c.req.param('gymId');
     const userId = this.getUserId(c);
-    const corrections = await c.req.json();
+    const corrections = CorrectionsSchema.parse(await c.req.json());
 
     const gym = await this.verificationService.applyCorrections(gymId, userId, corrections);
     return c.json({

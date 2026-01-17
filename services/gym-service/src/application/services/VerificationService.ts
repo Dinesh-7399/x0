@@ -59,6 +59,12 @@ export class VerificationService {
       throw new ValidationError('Gym is not in corrections_needed status');
     }
 
+    // Verify ownership
+    const ownership = await this.gymRepo.findOwnership(gymId, ownerId);
+    if (!ownership || ownership.role !== 'owner') {
+      throw new UnauthorizedError('Only owners can submit corrections');
+    }
+
     // Apply corrections and resubmit
     const updated = await this.gymRepo.update(gymId, {
       ...corrections,

@@ -86,6 +86,11 @@ export class GymController {
     const userId = this.getUserId(c);
     const { status } = await c.req.json();
 
+    const allowedStatuses = ['draft', 'pending_verification', 'under_review', 'approved', 'rejected', 'corrections_needed', 'suspended'];
+    if (!status || !allowedStatuses.includes(status)) {
+      return c.json({ error: `Invalid status. Allowed values: ${allowedStatuses.join(', ')}` }, 400);
+    }
+
     const gym = await this.gymService.updateGymStatus(gymId, userId, status);
     return c.json(toGymResponse(gym));
   }
@@ -119,7 +124,10 @@ export class GymController {
     const gymId = c.req.param('gymId');
     const staffUserId = c.req.param('userId');
     const ownerId = this.getUserId(c);
-    const { role, permissions } = await c.req.json();
+
+    // Reuse AddStaffSchema but without userId since it's in path
+    const schema = AddStaffSchema.omit({ userId: true });
+    const { role, permissions } = schema.parse(await c.req.json());
 
     const ownership = await this.gymService.updateStaff(gymId, ownerId, staffUserId, role, permissions);
     return c.json(ownership);

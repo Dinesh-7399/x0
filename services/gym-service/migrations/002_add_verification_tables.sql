@@ -17,11 +17,11 @@ ALTER TABLE gyms ADD COLUMN IF NOT EXISTS verified_at TIMESTAMP;
 CREATE TABLE IF NOT EXISTS gym_verification_reviews (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     gym_id UUID REFERENCES gyms(id) ON DELETE CASCADE,
-    reviewer_id UUID NOT NULL,
+    reviewer_id UUID,
     
     -- Status
     status VARCHAR(30) DEFAULT 'pending',
-    assigned_at TIMESTAMP DEFAULT NOW(),
+    assigned_at TIMESTAMP,
     started_at TIMESTAMP,
     completed_at TIMESTAMP,
     
