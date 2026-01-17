@@ -76,7 +76,20 @@ export class ProfileController {
       // Our service has getProfile(userId).
 
       const result = await this.userProfileService.getProfile(id);
-      return c.json(result, 200);
+
+      // Strip sensitive PII for public view
+      const publicProfile = {
+        id: result.id,
+        firstName: result.firstName,
+        lastName: result.lastName,
+        bio: result.bio,
+        avatarUrl: result.avatarUrl,
+        location: result.location, // Location is usually public, but can be debatable
+        createdAt: result.createdAt,
+        // Exclude: email, phoneNumber, userId (internal), updatedAt
+      };
+
+      return c.json(publicProfile, 200);
     } catch (error) {
       return this.handleError(c, error);
     }

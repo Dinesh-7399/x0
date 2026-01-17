@@ -14,8 +14,13 @@ export class AdminController {
    */
   async listUsers(c: Context): Promise<Response> {
     try {
-      const page = parseInt(c.req.query('page') || '1');
-      const limit = parseInt(c.req.query('limit') || '20');
+      let page = parseInt(c.req.query('page') || '1');
+      let limit = parseInt(c.req.query('limit') || '20');
+
+      if (isNaN(page) || page < 1) page = 1;
+      if (isNaN(limit) || limit < 1) limit = 20;
+      if (limit > 100) limit = 100; // Cap limit
+
       const offset = (page - 1) * limit;
 
       const result = await this.userAdminService.listUsers(limit, offset);

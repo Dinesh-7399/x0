@@ -17,6 +17,8 @@ const config = getConfig();
 
 // Bootstrap DI container
 const container = bootstrap();
+import { checkConnection } from './infrastructure/database/postgres.js';
+await checkConnection();
 
 // Resolve controllers
 const profileController = container.resolve<ProfileController>(ServiceKeys.ProfileController);

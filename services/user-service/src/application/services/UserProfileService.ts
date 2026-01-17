@@ -72,17 +72,21 @@ export class UserProfileService implements IUserProfileService {
       throw new UserNotFoundError();
     }
 
-    // Check if already exists
-    const existing = await this.profileRepository.findByUserId(userId);
-    if (existing) {
-      // Idempotency: return existing
-      return this.mapToResponse(existing, user);
+    // Optimistic creation to handle race conditions
+    try {
+      const profile = Profile.create(userId, data.firstName, data.lastName);
+      await this.profileRepository.save(profile);
+      return this.mapToResponse(profile, user);
+    } catch (error: any) {
+      // Postgres unique constraint violation code is 23505
+      if (error?.code === '23505') {
+        const existing = await this.profileRepository.findByUserId(userId);
+        if (existing) {
+          return this.mapToResponse(existing, user);
+        }
+      }
+      throw error;
     }
-
-    const profile = Profile.create(userId, data.firstName, data.lastName);
-    await this.profileRepository.save(profile);
-
-    return this.mapToResponse(profile, user);
   }
 
   private mapToResponse(profile: Profile, user: { email: string }): UserProfileResponse {

@@ -14,12 +14,15 @@ const sql = postgres(config.databaseUrl, {
 });
 
 // Test connection
-sql`SELECT 1`.then(() => {
-  console.log('✅ Database connected');
-}).catch((err) => {
-  console.error('❌ Database connection error:', err);
-  process.exit(1);
-});
+export const checkConnection = async () => {
+  try {
+    await sql`SELECT 1`;
+    console.log('✅ Database connected');
+  } catch (err) {
+    console.error('❌ Database connection error:', err);
+    process.exit(1);
+  }
+};
 
 /**
  * Get database instance

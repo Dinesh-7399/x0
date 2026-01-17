@@ -28,10 +28,14 @@ export class JwtService {
       if (!payload.sub || typeof payload.sub !== 'string') return null;
       if (!payload.email || typeof payload.email !== 'string') return null;
 
+      const roles = Array.isArray(payload.roles)
+        ? payload.roles.filter((r): r is string => typeof r === 'string')
+        : [];
+
       return {
         sub: payload.sub,
         email: payload.email,
-        roles: Array.isArray(payload.roles) ? payload.roles as string[] : [],
+        roles,
       };
     } catch (error) {
       // console.error('Token verification failed:', error);

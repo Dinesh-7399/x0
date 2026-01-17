@@ -17,7 +17,7 @@ export interface ProfileProps {
  * Profile Entity
  * 
  * Represents the extended user profile data.
- * Separted from Auth (User) to keep concerns clean.
+ * Separated from Auth (User) to keep concerns clean.
  */
 export class Profile {
   constructor(private readonly props: ProfileProps) { }
@@ -37,8 +37,8 @@ export class Profile {
    * Update profile fields
    */
   public update(data: Partial<Omit<ProfileProps, 'id' | 'userId' | 'createdAt' | 'updatedAt'>>) {
-    if (data.firstName) this.props.firstName = data.firstName;
-    if (data.lastName) this.props.lastName = data.lastName;
+    if (data.firstName !== undefined) this.props.firstName = data.firstName;
+    if (data.lastName !== undefined) this.props.lastName = data.lastName;
 
     // Allow setting to undefined/null (clearing)
     if (data.bio !== undefined) this.props.bio = data.bio;
