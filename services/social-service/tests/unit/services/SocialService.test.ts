@@ -1,6 +1,6 @@
 import { describe, it, expect, mock } from "bun:test";
-import { SocialService } from "../../src/application/services/SocialService";
-import { PostgresSocialRepository } from "../../src/infrastructure/database/PostgresSocialRepository";
+import { SocialService } from "../../../src/application/services/SocialService.js";
+import { PostgresSocialRepository } from "../../../src/infrastructure/database/PostgresSocialRepository.js";
 
 describe('SocialService', () => {
   const mockRepo = new PostgresSocialRepository() as any;
