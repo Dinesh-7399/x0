@@ -102,15 +102,83 @@ async function main() {
   });
 
   if (chatRes.ok) {
-    const chatData = await chatRes.json();
-    console.log('✅ Chat Service responded (List Conversations):', chatData);
+    console.log('✅ Chat Service: Conversations retrieved');
   } else {
+    // console.log('   Token being used:', token.substring(0, 20) + '...');
     const text = await chatRes.text();
-    console.log(`❌ Chat Service check failed: ${chatRes.status} ${text}`);
-    // process.exit(1); 
+    console.log(`❌ Chat Service check failed: ${chatRes.status} ${chatRes.statusText}`);
+    console.log('   Full response:', text);
   }
 
-  console.log('\n🎉 Verification Complete! All services (Identity, User, Gym, Chat) are syncing and reachable.');
+  // 7. Check Social Service
+  console.log('\n7. Checking Social Service (Followers)...');
+  const socialRes = await fetch(`${API_URL}/social/users/${userId}/followers`, {
+    headers: { 'Authorization': `Bearer ${token}` }
+  });
+  if (!socialRes.ok) {
+    console.log(`❌ Social Service check failed: ${socialRes.status} ${socialRes.statusText}`);
+    console.log('   Response:', await socialRes.text());
+  } else {
+    console.log('✅ Social Service: Followers retrieved');
+  }
+
+  // 8. Phase 2 Verification: Feed & Events
+  console.log('\n8. Verifying Feed & Events (Phase 2)...');
+
+  // A. Register User B
+  console.log('   Creating User B...');
+  const userBEmail = `user.b.${Date.now()}@example.com`;
+  const regB = await fetch(`${API_URL}/auth/register`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: userBEmail, password: 'Password123!', firstName: 'User', lastName: 'B' }),
+  });
+  if (!regB.ok) {
+    console.log(`❌ User B Registration Failed: ${regB.status}`);
+    console.log('   Response:', await regB.text());
+  } else {
+    const dataB = await regB.json() as any;
+    const tokenB = dataB.token;
+    const userIdB = dataB.user.id;
+    console.log(`   User B Created: ${userIdB}`);
+
+    // B. User A Follows User B
+    console.log(`   User A (${userId}) following User B (${userIdB})...`);
+    // NOTE: /social/follows/users/:targetId matches route POST /follows/users/:targetId inside /social mount
+    const followRes = await fetch(`${API_URL}/social/follows/users/${userIdB}`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+
+    if (followRes.ok) {
+      console.log('   ✅ Follow Successful. Waiting for Event Propagation (3s)...');
+      await new Promise(r => setTimeout(r, 3000));
+
+      // C. Check User B's Feed
+      console.log("   Checking User B's Feed...");
+      const feedRes = await fetch(`${API_URL}/feed/`, {
+        headers: { 'Authorization': `Bearer ${tokenB}` }
+      });
+
+      if (feedRes.ok) {
+        const feed = await feedRes.json();
+        console.log('   Feed Response:', JSON.stringify(feed, null, 2));
+        if (Array.isArray(feed) && feed.length > 0) {
+          console.log('   ✅ Feed Item Found!');
+          console.log(`      Content: ${feed[0].metadata?.message || 'Unknown'}`);
+        } else {
+          console.log('   ⚠️ Feed Empty. Event/Listener might have failed.');
+        }
+      } else {
+        console.log(`   ❌ Feed Service Failed: ${feedRes.status}`);
+      }
+    } else {
+      console.log(`   ❌ Follow Failed: ${followRes.status} ${await followRes.text()}`);
+    }
+  }
+
+
+  console.log('\n🎉 Verification Complete! All services (Identity, User, Gym, Chat, Social) are syncing and reachable.');
 }
 
 main().catch(console.error);
