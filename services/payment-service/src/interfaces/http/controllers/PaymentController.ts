@@ -6,10 +6,15 @@ export class PaymentController {
 
   async createOrder(c: Context) {
     const user = c.get('user');
+    if (!user || (!user.userId && !user.sub)) {
+      console.error('Unauthorized: Invalid User Context', user);
+      return c.json({ error: 'Unauthorized', message: 'Invalid User Context' }, 401);
+    }
+
     const body = await c.req.json();
 
     // Validation
-    if (!body.amount || body.amount <= 0) {
+    if (!body.amount || !Number.isFinite(Number(body.amount)) || Number(body.amount) <= 0) {
       return c.json({ error: 'Invalid Amount' }, 400);
     }
 
