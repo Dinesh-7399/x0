@@ -50,7 +50,7 @@ COPY services/${SERVICE} ./services/${SERVICE}
 
 # Build the service
 WORKDIR /app/services/${SERVICE}
-RUN bun build src/index.ts --outdir=dist --target=bun --minify --external:pino --external:pino-pretty --external:thread-stream
+RUN bun build src/index.ts --outdir=dist --target=bun --external:pino --external:pino-pretty --external:thread-stream
 
 # ========================================
 # Stage 3: Production

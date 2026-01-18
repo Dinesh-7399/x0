@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { serve } from '@hono/node-server';
+// import { serve } from '@hono/node-server';
 import { cors } from 'hono/cors';
 import { getConfig } from './config/index.js';
 import { createPaymentRoutes, createWebhookRoutes } from './interfaces/http/routes/payment.routes.js';
@@ -33,9 +33,16 @@ const webhookRoutes = createWebhookRoutes(webhookController);
 app.route('/payments', paymentRoutes);
 app.route('/webhooks', webhookRoutes);
 
-console.log(`🚀 Payment Service running on port ${config.port} (Mock: ${config.useMockGateway})`);
+// console.log(`🚀 Payment Service running on port ${config.port} (Mock: ${config.useMockGateway})`);
+// 
+// serve({
+//   fetch: app.fetch,
+//   port: config.port,
+// });
 
-serve({
-  fetch: app.fetch,
+export default {
   port: config.port,
-});
+  fetch: app.fetch,
+};
+
+console.log(`🚀 Payment Service running on port ${config.port} (Mock: ${config.useMockGateway})`);

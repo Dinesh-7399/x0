@@ -243,3 +243,14 @@ routes:
     stripPrefix: /api/v1
     auth: true
     timeout: 10000
+
+  # ============================================
+  # MEMBERSHIP ROUTES
+  # ============================================
+
+  - path: /api/v1/memberships/*
+    method: [GET, POST]
+    target: membership-service:8080
+    stripPrefix: /api/v1
+    auth: true
+    timeout: 5000

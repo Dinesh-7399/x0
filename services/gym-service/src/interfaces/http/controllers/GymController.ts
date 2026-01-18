@@ -22,14 +22,21 @@ export class GymController {
   // ============ PUBLIC ENDPOINTS ============
 
   async search(c: Context): Promise<Response> {
-    const query = SearchGymsSchema.parse(c.req.query());
-    const { gyms } = await this.searchService.search(query);
+    try {
+      const query = SearchGymsSchema.parse(c.req.query());
+      console.log('GymController: Searching with query:', query);
+      const { gyms } = await this.searchService.search(query);
+      console.log(`GymController: Found ${gyms.length} gyms`);
 
-    return c.json({
-      gyms: gyms.map(toGymResponse),
-      page: query.page,
-      limit: query.limit,
-    });
+      return c.json({
+        gyms: gyms.map(toGymResponse),
+        page: query.page,
+        limit: query.limit,
+      });
+    } catch (e) {
+      console.error('GymController: Search failed', e);
+      return c.json({ error: 'Search Failed', details: (e as Error).message }, 500);
+    }
   }
 
   async getBySlug(c: Context): Promise<Response> {

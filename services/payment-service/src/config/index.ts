@@ -5,7 +5,7 @@ dotenv.config();
 
 const configSchema = z.object({
   nodeEnv: z.enum(['development', 'production', 'test']).default('development'),
-  port: z.string().transform(Number).default('8080'),
+  port: z.string().transform(Number).default(8080),
   serviceName: z.string().default('payment-service'),
   databaseUrl: z.string(),
   redisUrl: z.string().default('redis://localhost:6379'),

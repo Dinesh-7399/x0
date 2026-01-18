@@ -19,15 +19,17 @@ export class PaymentController {
     }
 
     try {
+      console.log('PaymentController: Creating order for user:', user.userId || user.sub);
       const order = await this.service.createOrder(
         user.userId || user.sub, // Handle different JWT structures
         body.amount,
         body.currency || 'INR',
         body.metadata
       );
+      console.log('PaymentController: Order created:', order);
       return c.json(order);
     } catch (error) {
-      console.error(error);
+      console.error('PaymentController: Error creating order:', error);
       return c.json({ error: 'Payment Order Creation Failed' }, 500);
     }
   }
