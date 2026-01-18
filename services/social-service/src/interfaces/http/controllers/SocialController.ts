@@ -7,6 +7,9 @@ export class SocialController {
   // --- Follows ---
   async follow(c: Context) {
     const user = c.get('user');
+    if (!user) {
+      return c.json({ error: 'Unauthorized', message: 'User context missing' }, 401);
+    }
     const userId = user.userId || user.id || user.sub;
 
     if (!userId) {

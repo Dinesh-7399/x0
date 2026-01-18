@@ -55,7 +55,7 @@ export class SocialService {
     }));
   }
 
-  async unreactToEntity(userId: string, targetId: string, targetType: InteractionTargetType) {
-    await this.repo.removeInteraction(userId, targetId, targetType, 'LIKE');
+  async unreactToEntity(userId: string, targetId: string, targetType: InteractionTargetType, reactionType: string = 'LIKE') {
+    await this.repo.removeInteraction(userId, targetId, targetType, reactionType as any); // Type assertion until Enums shared
   }
 }

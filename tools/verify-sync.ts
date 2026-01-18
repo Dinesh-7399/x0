@@ -138,7 +138,7 @@ async function main() {
     console.log('   Response:', await regB.text());
   } else {
     const dataB = await regB.json() as any;
-    const tokenB = dataB.token;
+    const tokenB = dataB.accessToken;
     const userIdB = dataB.user.id;
     console.log(`   User B Created: ${userIdB}`);
 

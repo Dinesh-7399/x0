@@ -1,4 +1,0 @@
-$ tsc --noEmit
-src/infrastructure/clients/SocialServiceClient.ts(27,14): error TS18046: 'data' is of type 'unknown'.
-src/infrastructure/messaging/SocialEventListener.ts(1,53): error TS6059: File 'C:/Users/sahoo/projects/gymato/packages/messaging/src/index.ts' is not under 'rootDir' 'C:/Users/sahoo/projects/gymato/services/feed-service/src'. 'rootDir' is expected to contain all source files.
-error: script "typecheck" exited with code 1

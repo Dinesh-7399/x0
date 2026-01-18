@@ -18,7 +18,7 @@ describe('SocialService', () => {
   });
 
   it('should not allow self-follow', async () => {
-    expect(service.followUser('me', 'me')).rejects.toThrow('Cannot follow self');
+    await expect(service.followUser('me', 'me')).rejects.toThrow('Cannot follow self');
   });
 
   it('should react to a post', async () => {

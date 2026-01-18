@@ -23,11 +23,10 @@ export class SocialEventListener {
       }
     });
 
-    // Social Interaction: { userId, targetId, targetType, interactionType }
     await this.subscriber.subscribe('social.interaction.created', async (msg: Message<any>) => {
       const { userId, targetId, targetType, interactionType } = msg.payload;
-      // "userId liked targetId"
-      await this.feedService.handleActivity(userId, `LIKE_${targetType}`, targetId, targetType);
+      if (!userId || !targetId) return;
+      await this.feedService.handleActivity(userId, interactionType || `LIKE_${targetType}`, targetId, targetType);
     });
   }
 }
