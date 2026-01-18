@@ -1,0 +1,4 @@
+[0m[1mbun test [0m[2mv1.2.19 (aad3abea)[0m
+Registering user: trainer.test.1768714629736@example.com
+Manually verifying email in DB...
+Authenticated as User: 79049ab8-fd19-4f94-89b6-6b699bbce802

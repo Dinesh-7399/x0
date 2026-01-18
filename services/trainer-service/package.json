@@ -13,17 +13,20 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "hono": "^3.12.8",
-    "zod": "^3.22.4",
     "@gymato/database": "workspace:*",
+    "@gymato/errors": "workspace:*",
     "@gymato/messaging": "workspace:*",
     "@gymato/observability": "workspace:*",
     "@gymato/types": "workspace:*",
+    "@gymato/utils": "workspace:*",
     "@gymato/validation": "workspace:*",
-    "@gymato/errors": "workspace:*",
-    "@gymato/utils": "workspace:*"
+    "dotenv": "^17.2.3",
+    "hono": "^3.12.8",
+    "pg": "^8.17.1",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@types/pg": "^8.16.0",
     "bun-types": "^1.0.25"
   }
 }
