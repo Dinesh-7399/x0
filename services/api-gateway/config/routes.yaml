@@ -199,3 +199,25 @@ routes:
     rateLimit:
       points: 50
       duration: 3600  # 50 uploads per hour
+
+  # ============================================
+  # SOCIAL ROUTES
+  # ============================================
+
+  - path: /api/v1/social/*
+    method: [GET, POST, DELETE]
+    target: social-service:8080
+    stripPrefix: /api/v1
+    auth: true
+    timeout: 5000
+
+  # ============================================
+  # FEED ROUTES
+  # ============================================
+
+  - path: /api/v1/feed/*
+    method: [GET]
+    target: feed-service:8080
+    stripPrefix: /api/v1
+    auth: true
+    timeout: 5000

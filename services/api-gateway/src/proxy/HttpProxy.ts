@@ -136,6 +136,7 @@ export class HttpProxy {
       'accept-language',
       'cache-control',
       'user-agent',
+      'authorization',
     ];
 
     for (const header of headersToForward) {

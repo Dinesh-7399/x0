@@ -1,0 +1,24 @@
+6 | const tls_1 = require("tls");
+                          ^
+error: Browser build cannot require() Node.js builtin: "tls". To use Node.js builtins, set target to 'node' or 'bun'
+    at C:\Users\sahoo\projects\gymato\node_modules\ioredis\built\connectors\SentinelConnector\index.js:6:23
+
+27 |     const tls = require('tls')
+                             ^
+error: Browser build cannot require() Node.js builtin: "tls". To use Node.js builtins, set target to 'node' or 'bun'
+    at C:\Users\sahoo\projects\gymato\node_modules\pg\lib\stream.js:27:25
+
+3 | const dns = require('dns')
+                        ^
+error: Browser build cannot require() Node.js builtin: "dns". To use Node.js builtins, set target to 'node' or 'bun'
+    at C:\Users\sahoo\projects\gymato\node_modules\pg\lib\connection-parameters.js:3:21
+
+4 | const dns_1 = require("dns");
+                          ^
+error: Browser build cannot require() Node.js builtin: "dns". To use Node.js builtins, set target to 'node' or 'bun'
+    at C:\Users\sahoo\projects\gymato\node_modules\ioredis\built\cluster\ClusterOptions.js:4:23
+
+4 | const tls_1 = require("tls");
+                          ^
+error: Browser build cannot require() Node.js builtin: "tls". To use Node.js builtins, set target to 'node' or 'bun'
+    at C:\Users\sahoo\projects\gymato\node_modules\ioredis\built\connectors\StandaloneConnector.js:4:23
