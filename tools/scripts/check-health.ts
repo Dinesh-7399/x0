@@ -10,7 +10,20 @@ const SERVICES = [
 ];
 
 async function checkHealth() {
-  console.log('🏥 Checking Ecosystem Health...\n');
+  // Ensure logs dir exists
+  const fs = await import('fs');
+  const path = await import('path');
+  const logDir = path.join(process.cwd(), 'logs');
+  if (!fs.existsSync(logDir)) fs.mkdirSync(logDir);
+  const logFile = path.join(logDir, 'health_check.log');
+
+  const log = (msg: string) => {
+    console.log(msg);
+    fs.appendFileSync(logFile, msg + '\n');
+  };
+
+  log(`\n--- Health Check: ${new Date().toISOString()} ---`);
+  log('🏥 Checking Ecosystem Health...\n');
 
   const results = await Promise.all(SERVICES.map(async (service) => {
     try {
@@ -28,7 +41,7 @@ async function checkHealth() {
       return {
         name: service.name,
         ok: false,
-        error: e.message
+        error: (e as Error).message
       };
     }
   }));
@@ -37,10 +50,10 @@ async function checkHealth() {
 
   const allHealthy = results.every(r => r.ok);
   if (allHealthy) {
-    console.log('\n✅ All services are HEALTHY');
+    log('\n✅ All services are HEALTHY');
     process.exit(0);
   } else {
-    console.error('\n❌ Some services are UNHEALTHY or DOWN');
+    log('\n❌ Some services are UNHEALTHY or DOWN');
     process.exit(1);
   }
 }

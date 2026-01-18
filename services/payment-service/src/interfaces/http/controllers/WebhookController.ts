@@ -18,8 +18,8 @@ export class WebhookController {
       // Ensure secret exists
       const secret = config.razorpayWebhookSecret;
 
-      if (!secret || secret === 'webhook_secret_placeholder') {
-        console.error('CRITICAL: Razorpay Webhook Secret missing or is placeholder');
+      if (!secret) {
+        console.error('CRITICAL: Razorpay Webhook Secret missing');
         return c.json({ error: 'Server Configuration Error' }, 500);
       }
 

@@ -278,6 +278,28 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+
+  membership-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.service
+      args:
+        SERVICE: membership-service
+    environment:
+      - SERVICE_NAME=membership-service
+      - PORT=8080
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://gymato:gymato_dev@postgres:5432/gymato
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=dev-jwt-secret-change-in-production
+      - PAYMENT_SERVICE_URL=http://payment-service:8080 
+    ports:
+      - "8089:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      payment-service:
+        condition: service_started
       redis:
         condition: service_healthy
     deploy:

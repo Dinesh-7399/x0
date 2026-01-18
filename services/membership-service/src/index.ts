@@ -1,19 +1,36 @@
 import { Hono } from 'hono';
-import { logger } from 'hono/logger';
+import { cors } from 'hono/cors';
+import { getConfig } from './config/index.js';
+import { PostgresMembershipRepository } from './infrastructure/database/PostgresMembershipRepository.js';
+import { MembershipService } from './application/services/MembershipService.js';
+import { PaymentServiceClient } from './infrastructure/clients/PaymentServiceClient.js';
+import { MembershipController } from './interfaces/http/controllers/MembershipController.js';
+import { createMembershipRoutes } from './interfaces/http/routes/membership.routes.js';
+import { PaymentEventListener } from './infrastructure/messaging/PaymentEventListener.js';
 
 const app = new Hono();
+const config = getConfig();
 
-app.use('*', logger());
+app.use('*', cors());
 
-app.get('/health', (c) => {
-  return c.json({ status: 'healthy', service: 'membership-service' });
-});
+app.get('/health', (c) => c.json({ status: 'OK', service: 'membership-service' }));
 
-const port = process.env.PORT || 8080;
+// Dependencies
+const repo = new PostgresMembershipRepository();
+const paymentClient = new PaymentServiceClient();
+const service = new MembershipService(repo);
+const controller = new MembershipController(service, paymentClient);
 
-console.log(`🚀 membership-service running on http://localhost:${port}`);
+// Event Listener
+const eventListener = new PaymentEventListener(service); // Starts automatically
+
+// Routes
+const routes = createMembershipRoutes(controller);
+app.route('/memberships', routes);
+
+console.log(`🚀 Membership Service running on port ${config.port}`);
 
 export default {
-  port,
+  port: config.port,
   fetch: app.fetch,
 };
