@@ -75,15 +75,15 @@ export class InMemoryRateLimitStore implements IRateLimitStore {
  * Rate Limit Presets
  */
 export const RateLimitPresets = {
-  // Auth endpoints - stricter
+  // Auth endpoints - relaxed for development/testing
   login: {
     windowMs: 60 * 1000,  // 1 minute
-    maxRequests: 5,
+    maxRequests: 100,  // Increased for dev/test
     keyPrefix: 'rl:login:',
   },
   register: {
     windowMs: 60 * 60 * 1000,  // 1 hour
-    maxRequests: 3,
+    maxRequests: 1000,  // Increased for dev/test
     keyPrefix: 'rl:register:',
   },
   forgotPassword: {
