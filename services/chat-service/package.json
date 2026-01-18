@@ -13,7 +13,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "dotenv": "^16.3.1",
     "hono": "^3.12.8",
+    "pg": "^8.16.3",
     "zod": "^3.22.4",
     "@gymato/database": "workspace:*",
     "@gymato/messaging": "workspace:*",
@@ -24,6 +26,7 @@
     "@gymato/utils": "workspace:*"
   },
   "devDependencies": {
+    "@types/pg": "^8.15.5",
     "bun-types": "^1.0.25"
   }
 }
