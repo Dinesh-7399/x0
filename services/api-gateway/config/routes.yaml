@@ -232,6 +232,10 @@ routes:
     stripPrefix: /api/v1/payments
     auth: false
     timeout: 5000
+    rateLimit:
+      points: 30
+      duration: 60
+    maxBodySize: "1MB"
 
   - path: /api/v1/payments/*
     method: [POST]

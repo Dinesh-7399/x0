@@ -5,7 +5,7 @@ dotenv.config();
 
 const configSchema = z.object({
   nodeEnv: z.enum(['development', 'production', 'test']).default('development'),
-  port: z.string().transform(Number).default(8080),
+  port: z.string().transform(Number).default('8080'),
   serviceName: z.string().default('payment-service'),
   databaseUrl: z.string(),
   redisUrl: z.string().default('redis://localhost:6379'),
@@ -33,12 +33,25 @@ export const getConfig = (): Config => {
   });
 
   if (!result.success) {
-    if (process.env.NODE_ENV === 'test') {
-      // Return mock for tests if needed, or fail
-    }
     console.error('❌ Invalid configuration:', result.error.format());
     throw new Error('Invalid configuration');
   }
 
-  return result.data;
+  const config = result.data;
+
+  // Production Validation
+  if (config.nodeEnv === 'production') {
+    const placeholders = ['rzp_test_placeholder', 'rzp_secret_placeholder', 'webhook_secret_placeholder', 'dev-secret'];
+    if (placeholders.includes(config.razorpayKeyId) ||
+      placeholders.includes(config.razorpayKeySecret) ||
+      placeholders.includes(config.razorpayWebhookSecret) ||
+      placeholders.includes(config.jwtSecret)) {
+      throw new Error('❌ Production configuration cannot use placeholder or default secrets.');
+    }
+    if (config.useMockGateway) {
+      throw new Error('❌ Production cannot use Mock Gateway.');
+    }
+  }
+
+  return config;
 };
