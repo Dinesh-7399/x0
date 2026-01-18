@@ -19,7 +19,8 @@ const config = getConfig();
 export function verifyToken(token: string): DecodedToken {
   try {
     // Verify token signature and expiration
-    const decoded = jwt.verify(token, config.jwtSecret) as JwtPayload;
+    const secret = Buffer.from(config.jwtSecret);
+    const decoded = jwt.verify(token, secret) as JwtPayload;
 
     return {
       payload: decoded,

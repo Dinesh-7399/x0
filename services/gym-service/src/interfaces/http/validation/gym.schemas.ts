@@ -40,7 +40,13 @@ export const SearchGymsSchema = z.object({
   city: z.string().optional(),
   type: GymTypeSchema.optional(),
   query: z.string().optional(),
-  verified: z.coerce.boolean().optional(),
+  verified: z.preprocess((val) => {
+    if (typeof val === 'string') {
+      if (val === 'true') return true;
+      if (val === 'false') return false;
+    }
+    return val;
+  }, z.boolean().optional()),
   page: z.coerce.number().min(1).optional().default(1),
   limit: z.coerce.number().min(1).max(100).optional().default(20),
 });

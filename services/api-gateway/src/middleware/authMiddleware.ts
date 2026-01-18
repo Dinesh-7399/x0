@@ -60,6 +60,9 @@ export async function authMiddleware(c: Context, next: Next) {
       'User authenticated',
     );
 
+    // 5. Continue to next middleware/handler (after successful auth)
+    await next();
+
   } catch (error) {
     // Handle auth errors
     if (error instanceof TokenMissingError) {
@@ -71,8 +74,7 @@ export async function authMiddleware(c: Context, next: Next) {
         401 as const,
       );
     }
-    // 5. Continue to next middleware/handler
-    await next();
+
     if (error instanceof TokenExpiredError) {
       return c.json(
         {

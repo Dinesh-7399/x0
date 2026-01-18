@@ -133,6 +133,11 @@ export class GymService {
   }
 
   async updateStaff(gymId: string, ownerId: string, userId: string, role: string, permissions?: string[]): Promise<GymOwnership> {
+    // Cannot promote to owner via this method
+    if (role === 'owner') {
+      throw new ValidationError('Cannot update user to owner. Use transfer instead.');
+    }
+
     await this.checkOwnership(gymId, ownerId, ['owner']);
 
     const ownership = await this.gymRepo.updateOwnership(gymId, userId, role, permissions);
