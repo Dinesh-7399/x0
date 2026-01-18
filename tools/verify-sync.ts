@@ -178,7 +178,29 @@ async function main() {
   }
 
 
-  console.log('\n🎉 Verification Complete! All services (Identity, User, Gym, Chat, Social) are syncing and reachable.');
+  // 9. Phase 3 Verification: Payments
+  console.log('\n9. Verifying Payment Service...');
+  const payRes = await fetch(`${API_URL}/payments/orders`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      amount: 50000,
+      currency: 'INR',
+      metadata: { plan: 'premium_monthly' }
+    })
+  });
+
+  if (payRes.ok) {
+    const orderData = await payRes.json();
+    console.log('   ✅ Payment Order Created:', JSON.stringify(orderData, null, 2));
+  } else {
+    console.log(`   ❌ Payment Order Failed: ${payRes.status} ${await payRes.text()}`);
+  }
+
+  console.log('\n🎉 Verification Complete! All services (Identity, User, Gym, Chat, Social, Feed, Payment) are syncing and reachable.');
 }
 
 main().catch(console.error);

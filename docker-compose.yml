@@ -256,6 +256,34 @@ services:
         limits:
           memory: 256M
 
+  payment-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.service
+      args:
+        SERVICE: payment-service
+    container_name: gymato-payment-service
+    ports:
+      - "8088:8080"
+    environment:
+      - SERVICE_NAME=payment-service
+      - PORT=8080
+      - DATABASE_URL=postgresql://gymato:gymato_dev@postgres:5432/gymato
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=dev-jwt-secret-change-in-production
+      - RAZORPAY_KEY_ID=rzp_test_placeholder
+      - RAZORPAY_KEY_SECRET=rzp_secret_placeholder
+      - USE_MOCK_GATEWAY=true
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
 volumes:
   postgres_data:
   redis_data:
