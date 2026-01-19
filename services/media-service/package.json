@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "hono": "^3.12.8",
+    "pg": "^8.11.3",
     "zod": "^3.22.4",
     "@gymato/database": "workspace:*",
     "@gymato/messaging": "workspace:*",
@@ -24,6 +25,7 @@
     "@gymato/utils": "workspace:*"
   },
   "devDependencies": {
+    "@types/pg": "^8.10.9",
     "bun-types": "^1.0.25"
   }
 }

@@ -307,9 +307,41 @@ services:
         limits:
           memory: 256M
 
+  media-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.service
+      args:
+        SERVICE: media-service
+    container_name: gymato-media-service
+    ports:
+      - "8090:8080"
+    environment:
+      - PORT=8080
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://gymato:gymato_dev@postgres:5432/gymato
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=dev-jwt-secret-change-in-production
+      - STORAGE_TYPE=local
+      - STORAGE_PATH=/app/uploads
+      - PUBLIC_BASE_URL=http://localhost:8090
+      - MAX_FILE_SIZE=52428800
+    volumes:
+      - media_uploads:/app/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
 volumes:
   postgres_data:
   redis_data:
+  media_uploads:
 
 networks:
   default:

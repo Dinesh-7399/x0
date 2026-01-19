@@ -46,7 +46,7 @@ export function getConfig(): ChatServiceConfig {
 
     // Service URLs
     identityServiceUrl: process.env.IDENTITY_SERVICE_URL || 'http://localhost:8081',
-    mediaServiceUrl: process.env.MEDIA_SERVICE_URL || 'http://localhost:8085',
+    mediaServiceUrl: process.env.MEDIA_SERVICE_URL || 'http://localhost:8090',
     notificationChannel: process.env.NOTIFICATION_CHANNEL || 'notifications:push',
 
     // Limits
