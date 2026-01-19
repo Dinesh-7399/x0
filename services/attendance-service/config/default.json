@@ -1,0 +1,3 @@
+{
+  "note": "This file ensures the config directory exists for the Dockerfile COPY instruction."
+}
