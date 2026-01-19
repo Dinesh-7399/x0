@@ -338,6 +338,36 @@ services:
         limits:
           memory: 256M
 
+  workout-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.service
+      args:
+        SERVICE: workout-service
+    container_name: gymato-workout-service
+    ports:
+      - "8091:8080"
+    environment:
+      - PORT=8080
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://gymato:gymato_dev@postgres:5432/gymato
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=dev-jwt-secret-change-in-production
+      - MEDIA_SERVICE_URL=http://media-service:8080
+      - USER_SERVICE_URL=http://user-service:8080
+      - MAX_EXERCISES_PER_WORKOUT=50
+      - MAX_SETS_PER_EXERCISE=20
+      - MAX_WORKOUTS_PER_DAY=10
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
 volumes:
   postgres_data:
   redis_data:
