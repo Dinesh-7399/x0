@@ -1,0 +1,28 @@
+FROM oven/bun:1.0
+
+WORKDIR /app
+
+# Copy generic workspace files
+COPY package.json bun.lockb ./
+COPY tsconfig.json ./
+
+# Copy packages
+COPY packages ./packages
+
+# Copy service
+COPY services/attendance-service ./services/attendance-service
+
+# Install dependencies
+RUN bun install
+
+# Set working directory to service
+WORKDIR /app/services/attendance-service
+
+# Build (optional for Bun, but good practice)
+# RUN bun run build
+
+# Expose port
+EXPOSE 8080
+
+# Start command
+CMD ["bun", "run", "src/index.ts"]
