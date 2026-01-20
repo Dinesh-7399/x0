@@ -1,6 +1,6 @@
 {
   "name": "analytics-service",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -13,8 +13,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "hono": "^3.12.8",
-    "zod": "^3.22.4",
+    "hono": "^4.11.4",
+    "zod": "^4.3.5",
+    "postgres": "^3.4.8",
+    "redis": "^4.6.12",
+    "pino": "^8.17.2",
+    "pino-pretty": "^10.3.1",
     "@gymato/database": "workspace:*",
     "@gymato/messaging": "workspace:*",
     "@gymato/observability": "workspace:*",

@@ -422,6 +422,34 @@ services:
         limits:
           memory: 256M
 
+  analytics-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.service
+      args:
+        SERVICE: analytics-service
+    container_name: gymato-analytics-service
+    ports:
+      - "8094:8080"
+    environment:
+      - PORT=8080
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://gymato:gymato_dev@postgres:5432/gymato
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=dev-jwt-secret-change-in-production
+      - AGGREGATION_INTERVAL_MINUTES=5
+      - CACHE_TTL_SECONDS=300
+      - ENABLE_REALTIME_SYNC=true
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
 volumes:
   postgres_data:
   redis_data:

@@ -1,0 +1,21 @@
+{
+  "service": {
+    "name": "analytics-service",
+    "port": "8080",
+    "nodeEnv": "development"
+  },
+  "database": {
+    "url": "postgresql://gymato:gymato_dev@localhost:5432/gymato"
+  },
+  "redis": {
+    "url": "redis://localhost:6379"
+  },
+  "auth": {
+    "jwtSecret": "dev-jwt-secret-change-in-production"
+  },
+  "analytics": {
+    "aggregationIntervalMinutes": "5",
+    "cacheTtlSeconds": "300",
+    "enableRealtimeSync": true
+  }
+}
